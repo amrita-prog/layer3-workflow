@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vida End-to-End Workflow Architecture & Readiness Report</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --bg-primary: #0a0f1d;
@@ -39,7 +42,7 @@
         }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
@@ -283,9 +286,18 @@
             padding: 14px 16px;
         }
 
-        .flow-step-box.primary { border-left: 4px solid var(--accent-blue); }
-        .flow-step-box.intel { border-left: 4px solid var(--accent-indigo); }
-        .flow-step-box.calling { border-left: 4px solid var(--accent-cyan); }
+        .flow-step-box.primary {
+            border-left: 4px solid var(--accent-blue);
+        }
+
+        .flow-step-box.intel {
+            border-left: 4px solid var(--accent-indigo);
+        }
+
+        .flow-step-box.calling {
+            border-left: 4px solid var(--accent-cyan);
+        }
+
         .flow-step-box.state {
             border-left: 4px solid var(--accent-amber);
             background: rgba(245, 158, 11, 0.04);
@@ -309,9 +321,20 @@
             font-weight: 700;
         }
 
-        .badge-l3 { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
-        .badge-l2 { background: rgba(99, 102, 241, 0.2); color: #a5b4fc; }
-        .badge-ops { background: rgba(6, 182, 212, 0.2); color: #67e8f9; }
+        .badge-l3 {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+        }
+
+        .badge-l2 {
+            background: rgba(99, 102, 241, 0.2);
+            color: #a5b4fc;
+        }
+
+        .badge-ops {
+            background: rgba(6, 182, 212, 0.2);
+            color: #67e8f9;
+        }
 
         .flow-step-body {
             font-size: 12px;
@@ -365,8 +388,13 @@
             gap: 6px;
         }
 
-        .branch-yes .branch-title { color: #34d399; }
-        .branch-no .branch-title { color: #fbbf24; }
+        .branch-yes .branch-title {
+            color: #34d399;
+        }
+
+        .branch-no .branch-title {
+            color: #fbbf24;
+        }
 
         /* Visual Diagram Viewport */
         .diagram-viewport {
@@ -379,6 +407,7 @@
             text-align: center;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
         }
+
         .diagram-image {
             width: 100%;
             max-width: 1300px;
@@ -399,10 +428,12 @@
             margin-bottom: 22px;
             transition: all 0.2s ease;
         }
+
         .stage-flow-card:hover {
             border-color: rgba(59, 130, 246, 0.45);
             box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
         }
+
         .stage-flow-header {
             display: flex;
             justify-content: space-between;
@@ -413,11 +444,13 @@
             padding-bottom: 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
+
         .stage-title-wrap {
             display: flex;
             align-items: center;
             gap: 12px;
         }
+
         .stage-badge-num {
             background: linear-gradient(135deg, #2563eb, #1d4ed8);
             color: #ffffff;
@@ -428,41 +461,47 @@
             border-radius: 6px;
             text-transform: uppercase;
         }
+
         .stage-main-title {
             font-size: 16px;
             font-weight: 700;
             color: #ffffff;
         }
+
         .stage-flow-pipeline {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 12px;
             margin: 18px 0;
         }
+
         .mini-step-box {
             background: rgba(13, 20, 36, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 10px;
-            padding: 16px 13px;
+            padding: 15px 13px;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             position: relative;
-            min-height: 250px;
+            min-height: 290px;
             transition: all 0.2s ease;
         }
+
         .mini-step-box:hover {
             border-color: rgba(59, 130, 246, 0.6);
             background: rgba(17, 24, 39, 0.95);
             transform: translateY(-2px);
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
         }
+
         .mini-step-top {
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
+
         .mini-step-circle {
             width: 24px;
             height: 24px;
@@ -477,37 +516,395 @@
             flex-shrink: 0;
             border: 1px solid rgba(59, 130, 246, 0.35);
         }
+
         .mini-step-title {
             font-size: 12.5px;
             font-weight: 700;
             color: #ffffff;
             line-height: 1.35;
         }
-        .mini-step-desc {
-            font-size: 11.5px;
-            color: #94a3b8;
-            line-height: 1.5;
-            margin-bottom: 12px;
-            flex-grow: 1;
+
+        /* Specialized Step Card Styles matching user's Pre-Sales Diagram */
+        .step-card-blue {
+            border-top: 3px solid #38bdf8 !important;
         }
-        .mini-step-example {
-            background: rgba(6, 182, 212, 0.06);
-            border: 1px dashed rgba(6, 182, 212, 0.28);
+
+        .step-card-green {
+            border-top: 3px solid #34d399 !important;
+        }
+
+        .step-card-purple {
+            border-top: 3px solid #a855f7 !important;
+        }
+
+        .step-card-orange {
+            border-top: 3px solid #f97316 !important;
+        }
+
+        .step-card-pink {
+            border-top: 3px solid #ec4899 !important;
+        }
+
+        .step-card-amber {
+            border-top: 3px solid #f59e0b !important;
+        }
+
+        .step-card-cyan {
+            border-top: 3px solid #06b6d4 !important;
+        }
+
+        .circle-blue {
+            background: rgba(56, 189, 248, 0.2) !important;
+            color: #38bdf8 !important;
+            border-color: rgba(56, 189, 248, 0.4) !important;
+        }
+
+        .circle-green {
+            background: rgba(52, 211, 153, 0.2) !important;
+            color: #34d399 !important;
+            border-color: rgba(52, 211, 153, 0.4) !important;
+        }
+
+        .circle-purple {
+            background: rgba(168, 85, 247, 0.2) !important;
+            color: #c084fc !important;
+            border-color: rgba(168, 85, 247, 0.4) !important;
+        }
+
+        .circle-orange {
+            background: rgba(249, 115, 22, 0.2) !important;
+            color: #fb923c !important;
+            border-color: rgba(249, 115, 22, 0.4) !important;
+        }
+
+        .circle-pink {
+            background: rgba(236, 72, 153, 0.2) !important;
+            color: #f472b6 !important;
+            border-color: rgba(236, 72, 153, 0.4) !important;
+        }
+
+        .circle-amber {
+            background: rgba(245, 158, 11, 0.2) !important;
+            color: #fbbf24 !important;
+            border-color: rgba(245, 158, 11, 0.4) !important;
+        }
+
+        .circle-cyan {
+            background: rgba(6, 182, 212, 0.2) !important;
+            color: #22d3ee !important;
+            border-color: rgba(6, 182, 212, 0.4) !important;
+        }
+
+        .step-badges-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 8px 0 10px 0;
+        }
+
+        .step-sub-badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 7px;
+            border-radius: 4px;
+            letter-spacing: 0.02em;
+        }
+
+        .step-bullet-list {
+            list-style: none;
+            padding: 0;
+            margin: 8px 0 14px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .step-bullet-list li {
+            font-size: 11.5px;
+            line-height: 1.6;
+            color: #cbd5e1;
+            position: relative;
+            padding-left: 14px;
+            letter-spacing: normal;
+            word-spacing: normal;
+        }
+
+        .step-bullet-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent-blue);
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .presales-example-box {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 10px 11px;
+            margin-top: auto;
+            font-size: 11px;
+            line-height: 1.55;
+            letter-spacing: normal;
+            word-spacing: normal;
+        }
+
+        .example-blue {
+            border-color: rgba(56, 189, 248, 0.3);
+            background: rgba(56, 189, 248, 0.04);
+        }
+
+        .example-green {
+            border-color: rgba(52, 211, 153, 0.3);
+            background: rgba(52, 211, 153, 0.04);
+        }
+
+        .example-purple {
+            border-color: rgba(168, 85, 247, 0.3);
+            background: rgba(168, 85, 247, 0.04);
+        }
+
+        .example-orange {
+            border-color: rgba(249, 115, 22, 0.3);
+            background: rgba(249, 115, 22, 0.04);
+        }
+
+        .example-pink {
+            border-color: rgba(236, 72, 153, 0.3);
+            background: rgba(236, 72, 153, 0.04);
+        }
+
+        .example-amber {
+            border-color: rgba(245, 158, 11, 0.3);
+            background: rgba(245, 158, 11, 0.04);
+        }
+
+        .example-cyan {
+            border-color: rgba(6, 182, 212, 0.3);
+            background: rgba(6, 182, 212, 0.04);
+        }
+
+        .presales-example-title {
+            font-size: 10.5px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .example-blue .presales-example-title {
+            color: #38bdf8;
+        }
+
+        .example-green .presales-example-title {
+            color: #34d399;
+        }
+
+        .example-purple .presales-example-title {
+            color: #c084fc;
+        }
+
+        .example-orange .presales-example-title {
+            color: #fb923c;
+        }
+
+        .example-pink .presales-example-title {
+            color: #f472b6;
+        }
+
+        .example-amber .presales-example-title {
+            color: #fbbf24;
+        }
+
+        .example-cyan .presales-example-title {
+            color: #22d3ee;
+        }
+
+        .example-kv {
+            color: #cbd5e1;
+            font-size: 11px;
+            margin-bottom: 2px;
+        }
+
+        .example-kv span {
+            color: #94a3b8;
+            font-weight: 600;
+        }
+
+        .example-bullets {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 4px;
+        }
+
+        .example-bullets li {
+            position: relative;
+            padding-left: 12px;
+            margin-bottom: 3px;
+            color: #cbd5e1;
+            font-size: 11px;
+        }
+
+        .example-bullets li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #c084fc;
+        }
+
+        .example-quote {
+            font-style: italic;
+            color: #fed7aa;
+            line-height: 1.45;
+        }
+
+        .presales-branch-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: auto;
+        }
+
+        .presales-branch-card {
             border-radius: 6px;
             padding: 8px 10px;
             font-size: 11px;
             line-height: 1.45;
-            color: #cbd5e1;
-            margin-top: auto;
         }
-        .mini-step-example strong {
-            color: var(--accent-cyan);
-            display: block;
-            font-size: 9.5px;
+
+        .branch-yes {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+        }
+
+        .branch-no {
+            background: rgba(244, 63, 94, 0.08);
+            border: 1px solid rgba(244, 63, 94, 0.35);
+        }
+
+        .branch-header {
+            font-weight: 700;
+            font-size: 10.5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 4px;
             text-transform: uppercase;
-            letter-spacing: 0.06em;
-            margin-bottom: 3px;
+            letter-spacing: 0.03em;
         }
+
+        .branch-yes .branch-header {
+            color: #34d399;
+        }
+
+        .branch-no .branch-header {
+            color: #fb7185;
+        }
+
+        .branch-bullets {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .branch-bullets li {
+            position: relative;
+            padding-left: 11px;
+            margin-bottom: 2px;
+            font-size: 10.5px;
+            color: #cbd5e1;
+        }
+
+        .branch-bullets li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #94a3b8;
+        }
+
+        /* Horizontal Pipeline Track for Section 2 (Step 1 to 13) */
+        .call-flow-horizontal-track {
+            display: flex;
+            gap: 12px;
+            align-items: stretch;
+            overflow-x: auto;
+            padding: 12px 6px 18px 6px;
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: #3b82f6 rgba(15, 23, 42, 0.6);
+        }
+
+        .call-flow-horizontal-track::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .call-flow-horizontal-track::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 4px;
+        }
+
+        .call-flow-horizontal-track::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 4px;
+        }
+
+        .call-flow-card {
+            flex: 0 0 245px;
+            min-width: 245px;
+            max-width: 245px;
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 14px 13px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .call-flow-step-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #475569;
+            font-size: 16px;
+            font-weight: 800;
+            flex: 0 0 14px;
+            user-select: none;
+        }
+
+        .call-flow-group-l2 {
+            background: rgba(236, 72, 153, 0.04);
+            border: 1px dashed rgba(236, 72, 153, 0.35);
+            border-radius: 12px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .call-flow-group-header {
+            font-size: 10.5px;
+            font-weight: 700;
+            color: #f472b6;
+            letter-spacing: 0.04em;
+            text-align: center;
+            padding-bottom: 5px;
+            border-bottom: 1px solid rgba(236, 72, 153, 0.18);
+            text-transform: uppercase;
+        }
+
+        .call-flow-group-cards {
+            display: flex;
+            gap: 10px;
+            align-items: stretch;
+        }
+
         .stage-flow-footer {
             display: flex;
             justify-content: space-between;
@@ -519,6 +916,7 @@
             border-top: 1px solid rgba(255, 255, 255, 0.06);
             font-size: 12px;
         }
+
         .milestone-badge {
             background: rgba(16, 185, 129, 0.1);
             border: 1px solid rgba(16, 185, 129, 0.3);
@@ -660,10 +1058,25 @@
             font-weight: 600;
         }
 
-        .type-connector { background: rgba(6, 182, 212, 0.15); color: #22d3ee; }
-        .type-core { background: rgba(99, 102, 241, 0.15); color: #a5b4fc; }
-        .type-specialized { background: rgba(168, 85, 247, 0.15); color: #d8b4fe; }
-        .type-supporting { background: rgba(59, 130, 246, 0.15); color: #93c5fd; }
+        .type-connector {
+            background: rgba(6, 182, 212, 0.15);
+            color: #22d3ee;
+        }
+
+        .type-core {
+            background: rgba(99, 102, 241, 0.15);
+            color: #a5b4fc;
+        }
+
+        .type-specialized {
+            background: rgba(168, 85, 247, 0.15);
+            color: #d8b4fe;
+        }
+
+        .type-supporting {
+            background: rgba(59, 130, 246, 0.15);
+            color: #93c5fd;
+        }
 
         .status-badge {
             display: inline-flex;
@@ -707,11 +1120,17 @@
                 max-width: 100% !important;
             }
 
-            .btn-print, .header::before {
+            .btn-print,
+            .header::before {
                 display: none !important;
             }
 
-            .header, .section, .block-card, .stage-card, .flow-step-box, .flow-container {
+            .header,
+            .section,
+            .block-card,
+            .stage-card,
+            .flow-step-box,
+            .flow-container {
                 background: #ffffff !important;
                 color: #0f172a !important;
                 border: 1px solid #cbd5e1 !important;
@@ -719,11 +1138,20 @@
                 break-inside: avoid;
             }
 
-            h1, .block-name, .stage-name, .flow-step-title, .section-title, .component-name {
+            h1,
+            .block-name,
+            .stage-name,
+            .flow-step-title,
+            .section-title,
+            .component-name {
                 color: #0f172a !important;
             }
 
-            .block-desc, .flow-step-body, .stage-flow-list li, td, .header-desc {
+            .block-desc,
+            .flow-step-body,
+            .stage-flow-list li,
+            td,
+            .header-desc {
                 color: #334155 !important;
             }
 
@@ -762,7 +1190,8 @@
                 border-bottom: 1px solid #e2e8f0 !important;
             }
 
-            .decision-container, .stage-flow-card {
+            .decision-container,
+            .stage-flow-card {
                 background: #f8fafc !important;
                 border: 1px solid #e2e8f0 !important;
             }
@@ -792,12 +1221,31 @@
                 color: #0f172a !important;
             }
 
+            .presales-example-box {
+                background: #f8fafc !important;
+                border: 1px solid #cbd5e1 !important;
+                color: #0f172a !important;
+            }
+
+            .presales-flow-summary-bar {
+                background: #f1f5f9 !important;
+                border: 1px solid #cbd5e1 !important;
+                color: #0f172a !important;
+            }
+
+            .step-bullet-list li,
+            .example-kv,
+            .example-bullets li {
+                color: #334155 !important;
+            }
+
             .diagram-viewport {
                 background: #ffffff !important;
                 border: none !important;
                 padding: 0 !important;
                 box-shadow: none !important;
             }
+
             .diagram-image {
                 width: 100% !important;
                 max-width: 100% !important;
@@ -807,6 +1255,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
 
@@ -820,15 +1269,18 @@
                 </div>
                 <button class="btn-print" onclick="window.print()">
                     <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
-                        <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/>
+                        <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+                        <path
+                            d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" />
                     </svg>
                     Print / Save as PDF
                 </button>
             </div>
             <h1>Vida End-to-End Workflow Architecture & Readiness Report</h1>
             <p class="header-desc">
-                Technical workflow blueprint covering Ingestion, Layer 3 Backend Orchestration, Layer 2 Agent Intelligence, AI Calling Bot Service Execution, Lifecycle Stage Progression, and Component Readiness Tracking.
+                Technical workflow blueprint covering Ingestion, Layer 3 Backend Orchestration, Layer 2 Agent
+                Intelligence, AI Calling Bot Service Execution, Lifecycle Stage Progression, and Component Readiness
+                Tracking.
             </p>
             <div class="meta-strip">
                 <div class="meta-item">
@@ -862,7 +1314,8 @@
                         <div class="block-num">Block 01</div>
                         <div class="block-name">Lead Ingestion & Channels (Connectors)</div>
                         <p class="block-desc">
-                            Omnichannel intake gateways ingesting inquiries, Excel uploads, webhooks, and raw customer touchpoints into Layer 3.
+                            Omnichannel intake gateways ingesting inquiries, Excel uploads, webhooks, and raw customer
+                            touchpoints into Layer 3.
                         </p>
                     </div>
                     <div class="block-pills">
@@ -878,7 +1331,8 @@
                         <div class="block-num">Block 02 (Stage 0)</div>
                         <div class="block-name">Customer Profile Matching (Entity Resolution)</div>
                         <p class="block-desc">
-                            Resolves phone/email identity, cross-references historical interactions, de-duplicates leads, and links to customer personas.
+                            Resolves phone/email identity, cross-references historical interactions, de-duplicates
+                            leads, and links to customer personas.
                         </p>
                     </div>
                     <div class="block-pills">
@@ -894,7 +1348,8 @@
                         <div class="block-num">Block 03</div>
                         <div class="block-name">Lead Priority & Routing (Stage Assessor)</div>
                         <p class="block-desc">
-                            Evaluates lead priority, checks lifecycle stage, and routes to appropriate specialized agents and operational queues.
+                            Evaluates lead priority, checks lifecycle stage, and routes to appropriate specialized
+                            agents and operational queues.
                         </p>
                     </div>
                     <div class="block-pills">
@@ -910,7 +1365,8 @@
                         <div class="block-num">Block 04</div>
                         <div class="block-name">Conversational Intelligence (Core AI Agents)</div>
                         <p class="block-desc">
-                            Layer 2 agent pool orchestrating conversational intelligence, channel selection, and dialogue script guidelines.
+                            Layer 2 agent pool orchestrating conversational intelligence, channel selection, and
+                            dialogue script guidelines.
                         </p>
                     </div>
                     <div class="block-pills">
@@ -927,7 +1383,8 @@
                         <div class="block-num">Block 05</div>
                         <div class="block-name">Execution & Systems (Specialized Tools)</div>
                         <p class="block-desc">
-                            Task-specific execution units performing backend lookups, telephony dispatching, and enterprise synchronization.
+                            Task-specific execution units performing backend lookups, telephony dispatching, and
+                            enterprise synchronization.
                         </p>
                     </div>
                     <div class="block-pills">
@@ -940,32 +1397,333 @@
             </div>
         </section>
 
-        <!-- SECTION 2: END-TO-END AI CALL FLOW DIAGRAM -->
+        <!-- SECTION 2: END-TO-END AI CALL FLOW (STEPS 1 TO 13) -->
         <section class="section" style="padding: 26px 22px;">
-            <div class="section-header" style="margin-bottom: 16px;">
+            <div class="section-header" style="margin-bottom: 14px;">
                 <h2 class="section-title">
                     <span>📞 Current AI Call Flow (End-to-End)</span>
                 </h2>
-                <span class="section-tag">Visual Workflow Architecture</span>
+                <span class="section-tag">Step 1 to Step 13 Complete Pipeline</span>
             </div>
-            <p style="color: var(--text-secondary); font-size: 13.5px; margin-bottom: 16px; line-height: 1.6;">
-                Complete end-to-end operational pipeline from CRM lead intake, Layer 3 backend storage, Layer 2 strategic intelligence & script pointer preparation, AI Calling Bot Service voice execution, and post-call feedback synchronization.
+            <p style="color: var(--text-secondary); font-size: 13.5px; margin-bottom: 14px; line-height: 1.6;">
+                From CRM Data to Call Execution and Post-Call Data Storage. End-to-end operational pipeline across CRM,
+                Layer 3 Backend, Layer 2 AI Agents, AI Calling Bot Service, and database persistence.
             </p>
 
-            <!-- Diagram Toolbar with Full HD View Link -->
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-                <span style="font-size: 12px; color: var(--accent-cyan); font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
-                    <span style="width: 8px; height: 8px; border-radius: 50%; background: #22d3ee; display: inline-block;"></span>
-                    High-Definition Architecture Infographic (2048 x 1024)
+            <!-- Navigation / Toolbar Strip -->
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.06); padding: 8px 14px; border-radius: 8px;">
+                <span style="font-size: 12px; color: #94a3b8; display: inline-flex; align-items: center; gap: 6px;">
+                    <span style="color: #60a5fa; font-weight: bold; font-size: 14px;">⇄</span> Scroll horizontally (or
+                    hold Shift + Mouse Wheel) to view all 11 sequential steps
                 </span>
-                <a href="ai_call_flow_diagram.png" target="_blank" style="background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.35); color: #60a5fa; font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
-                    🔍 Open Full-Resolution Image in New Tab
+                <a href="ai_call_flow_diagram.png" target="_blank"
+                    style="background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.35); color: #60a5fa; font-size: 11.5px; font-weight: 600; padding: 5px 12px; border-radius: 6px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                    🔍 Open Full Infographic Image in New Tab
                 </a>
             </div>
 
-            <!-- Large Visual Infographic Display -->
-            <div class="diagram-viewport">
-                <img src="ai_call_flow_diagram.png" alt="Current AI Call Flow (End-to-End) - From CRM Data to Call Execution and Post-Call Data Storage" class="diagram-image">
+            <!-- Horizontal Cards Track (All Steps in One Single Line) -->
+            <div class="call-flow-horizontal-track">
+
+                <!-- Step 1 -->
+                <div class="mini-step-box step-card-blue call-flow-card">
+                    <div class="mini-step-top">
+                        <span class="mini-step-circle circle-blue">1</span>
+                        <span class="mini-step-title">Data Comes From CRM</span>
+                    </div>
+                    <div class="step-badges-row">
+                        <span class="step-sub-badge"
+                            style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);">CRM</span>
+                    </div>
+                    <ul class="step-bullet-list">
+                        <li>Lead data is received from CRM (e.g., Salesforce).</li>
+                        <li>Contains lead details like name, phone, interest, property, etc.</li>
+                    </ul>
+                    <div class="presales-example-box example-blue">
+                        <strong class="presales-example-title">Example:</strong>
+                        <p style="color: #cbd5e1; font-size: 11px; line-height: 1.5;">Leads from Salesforce CRM</p>
+                    </div>
+                </div>
+
+                <div class="call-flow-step-arrow">→</div>
+
+                <!-- Step 2 -->
+                <div class="mini-step-box step-card-orange call-flow-card">
+                    <div class="mini-step-top">
+                        <span class="mini-step-circle circle-orange">2</span>
+                        <span class="mini-step-title">Ingest Leads in Layer 3</span>
+                    </div>
+                    <div class="step-badges-row">
+                        <span class="step-sub-badge"
+                            style="color: #fb923c; border-color: rgba(251, 146, 60, 0.3);">Layer 3 (Tenant
+                            Backend)</span>
+                    </div>
+                    <ul class="step-bullet-list">
+                        <li>We ingest the leads into our backend.</li>
+                        <li>Data is stored in database (e.g., presales_lead table).</li>
+                    </ul>
+                    <div class="presales-example-box example-orange">
+                        <strong class="presales-example-title">Example:</strong>
+                        <p style="color: #cbd5e1; font-size: 11px; line-height: 1.5;">500 leads ingested successfully
+                        </p>
+                    </div>
+                </div>
+
+                <div class="call-flow-step-arrow">→</div>
+
+                <!-- Step 3 -->
+                <div class="mini-step-box step-card-green call-flow-card">
+                    <div class="mini-step-top">
+                        <span class="mini-step-circle circle-green">3</span>
+                        <span class="mini-step-title">Send Leads to Layer 2</span>
+                    </div>
+                    <div class="step-badges-row">
+                        <span class="step-sub-badge"
+                            style="color: #34d399; border-color: rgba(52, 211, 153, 0.3);">Layer 3 → Layer 2</span>
+                    </div>
+                    <ul class="step-bullet-list">
+                        <li>After ingestion, all leads (to be called) are sent to Layer 2.</li>
+                        <li>We pass lead details (name, phone, property interest, etc.).</li>
+                    </ul>
+                    <div class="presales-example-box example-green">
+                        <strong class="presales-example-title">Example:</strong>
+                        <p style="color: #cbd5e1; font-size: 11px; line-height: 1.5;">Send 500 leads to Layer 2 for
+                            calling preparation</p>
+                    </div>
+                </div>
+
+                <div class="call-flow-step-arrow">→</div>
+
+                <!-- Step 4 -->
+                <div class="mini-step-box step-card-purple call-flow-card">
+                    <div class="mini-step-top">
+                        <span class="mini-step-circle circle-purple">4</span>
+                        <span class="mini-step-title">Layer 2 Identifies Call List</span>
+                    </div>
+                    <div class="step-badges-row">
+                        <span class="step-sub-badge"
+                            style="color: #c084fc; border-color: rgba(192, 132, 252, 0.3);">Layer 2 (MCP
+                            Orchestrator)</span>
+                    </div>
+                    <ul class="step-bullet-list">
+                        <li>Layer 2 receives the ingested leads.</li>
+                        <li>Identifies how many leads need to be called.</li>
+                        <li>Processes lead data and prepares for next steps.</li>
+                    </ul>
+                    <div class="presales-example-box example-purple">
+                        <strong class="presales-example-title">Example:</strong>
+                        <p style="color: #cbd5e1; font-size: 11px; line-height: 1.5;">Layer 2 identifies 500 leads to
+                            call</p>
+                    </div>
+                </div>
+
+                <div class="call-flow-step-arrow">→</div>
+
+                <!-- Group 5, 6, 7: Layer 2 Script & Pointers Preparation -->
+                <div class="call-flow-group-l2">
+                    <div class="call-flow-group-header">
+                        🧠 LAYER 2 – SCRIPT & POINTERS PREPARATION (Uses intelligence from Layer 1 and its own tools)
+                    </div>
+                    <div class="call-flow-group-cards">
+
+                        <!-- Step 5 -->
+                        <div class="mini-step-box step-card-pink call-flow-card">
+                            <div class="mini-step-top">
+                                <span class="mini-step-circle circle-pink">5</span>
+                                <span class="mini-step-title">Fetch Intelligence from Layer 1</span>
+                            </div>
+                            <div class="step-badges-row">
+                                <span class="step-sub-badge"
+                                    style="color: #f472b6; border-color: rgba(244, 114, 182, 0.3);">Layer 2 → Layer 1
+                                    (The Brain)</span>
+                            </div>
+                            <ul class="step-bullet-list">
+                                <li>Layer 2 calls Layer 1 to get intelligence for these leads.</li>
+                                <li>Gets data like contactability score, affluence score, persona, etc.</li>
+                            </ul>
+                            <div class="presales-example-box example-pink">
+                                <strong class="presales-example-title">Example:</strong>
+                                <div class="example-kv"><span>Lead:</span> 9876543210</div>
+                                <div class="example-kv"><span>Contactability:</span> 0.82</div>
+                                <div class="example-kv"><span>Persona:</span> HNI Investor</div>
+                            </div>
+                        </div>
+
+                        <div class="call-flow-step-arrow" style="color: #f472b6;">→</div>
+
+                        <!-- Step 6 -->
+                        <div class="mini-step-box step-card-pink call-flow-card">
+                            <div class="mini-step-top">
+                                <span class="mini-step-circle circle-pink">6</span>
+                                <span class="mini-step-title">Generate Script & Pointers</span>
+                            </div>
+                            <div class="step-badges-row">
+                                <span class="step-sub-badge"
+                                    style="color: #f472b6; border-color: rgba(244, 114, 182, 0.3);">Layer 2 (MCP
+                                    Orchestrator)</span>
+                            </div>
+                            <ul class="step-bullet-list">
+                                <li>Layer 2 combines lead data + intelligence (from Layer 1) + its own tools.</li>
+                                <li>Prepares strategic pointers and script structure for each lead (not final calling
+                                    script).</li>
+                            </ul>
+                            <div class="presales-example-box example-pink">
+                                <strong class="presales-example-title">Example: Key Pointers</strong>
+                                <ul class="example-bullets">
+                                    <li>Highlight 2 BHK</li>
+                                    <li>Mention premium location</li>
+                                    <li>Discuss budget ...</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="call-flow-step-arrow" style="color: #f472b6;">→</div>
+
+                        <!-- Step 7 -->
+                        <div class="mini-step-box step-card-pink call-flow-card">
+                            <div class="mini-step-top">
+                                <span class="mini-step-circle circle-pink">7</span>
+                                <span class="mini-step-title">Send Script & Pointers to Layer 3</span>
+                            </div>
+                            <div class="step-badges-row">
+                                <span class="step-sub-badge"
+                                    style="color: #f472b6; border-color: rgba(244, 114, 182, 0.3);">Layer 2 → Layer
+                                    3</span>
+                            </div>
+                            <ul class="step-bullet-list">
+                                <li>Layer 2 sends the generated script pointers and related details to Layer 3.</li>
+                                <li>Data is stored in our backend database.</li>
+                            </ul>
+                            <div class="presales-example-box example-pink">
+                                <strong class="presales-example-title">Example:</strong>
+                                <p style="color: #cbd5e1; font-size: 11px; line-height: 1.5;">Pointers saved for 500
+                                    leads in script_pointers table</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="call-flow-step-arrow">→</div>
+
+                <!-- Step 8 -->
+                <div class="mini-step-box step-card-blue call-flow-card">
+                    <div class="mini-step-top">
+                        <span class="mini-step-circle circle-blue">8</span>
+                        <span class="mini-step-title">AI Calling Bot Service Fetches Details via API</span>
+                    </div>
+                    <div class="step-badges-row">
+                        <span class="step-sub-badge"
+                            style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);">Layer 3 API</span>
+                    </div>
+                    <ul class="step-bullet-list">
+                        <li>We provide an API for AI Calling Bot Service.</li>
+                        <li>They fetch lead details, script pointers and all required information via this API.</li>
+                    </ul>
+                    <div class="presales-example-box example-blue">
+                        <strong class="presales-example-title">Example:</strong>
+                        <code style="color: #38bdf8; font-size: 11px; word-break: break-all;">GET /calling/leads</code>
+                        <p style="color: #94a3b8; font-size: 10.5px; margin-top: 3px;">(returns lead details + pointers)
+                        </p>
+                    </div>
+                </div>
+
+                <div class="call-flow-step-arrow">→</div>
+
+                <!-- Step 9 -->
+                <div class="mini-step-box step-card-amber call-flow-card">
+                    <div class="mini-step-top">
+                        <span class="mini-step-circle circle-amber">9</span>
+                        <span class="mini-step-title">AI Calling Bot Service Makes Actual Calls</span>
+                    </div>
+                    <div class="step-badges-row">
+                        <span class="step-sub-badge" style="color: #fbbf24; border-color: rgba(245, 158, 11, 0.3);">AI
+                            Calling Bot Service (External)</span>
+                    </div>
+                    <ul class="step-bullet-list">
+                        <li>Using the pointers from our system, AI Calling Bot Service makes actual calls.</li>
+                        <li>They create their own final calling script based on our strategic pointers.</li>
+                    </ul>
+                    <div class="presales-example-box example-amber">
+                        <strong class="presales-example-title">Example:</strong>
+                        <p style="color: #cbd5e1; font-size: 11px; line-height: 1.5;">AI bot calls the leads using
+                            provided pointers</p>
+                    </div>
+                </div>
+
+                <div class="call-flow-step-arrow">→</div>
+
+                <!-- Step 10 -->
+                <div class="mini-step-box step-card-green call-flow-card">
+                    <div class="mini-step-top">
+                        <span class="mini-step-circle circle-green">10</span>
+                        <span class="mini-step-title">Call Completes & Webhook Sent</span>
+                    </div>
+                    <div class="step-badges-row">
+                        <span class="step-sub-badge" style="color: #34d399; border-color: rgba(52, 211, 153, 0.3);">AI
+                            Calling Bot Service → Layer 3 Webhook</span>
+                    </div>
+                    <ul class="step-bullet-list">
+                        <li>After each call, AI Calling Bot Service sends call data to our webhook API.</li>
+                        <li>They send: Call transcript, audio recording, sentiment, call outcome, remarks.</li>
+                    </ul>
+                    <div class="presales-example-box example-green">
+                        <strong class="presales-example-title">Example:</strong>
+                        <code style="color: #34d399; font-size: 11px; word-break: break-all;">POST /webhook/call</code>
+                        <p style="color: #94a3b8; font-size: 10.5px; margin-top: 3px;">(Transcript, audio, sentiment,
+                            etc.)</p>
+                    </div>
+                </div>
+
+                <div class="call-flow-step-arrow">→</div>
+
+                <!-- Step 12 -->
+                <div class="mini-step-box step-card-orange call-flow-card">
+                    <div class="mini-step-top">
+                        <span class="mini-step-circle circle-orange">12</span>
+                        <span class="mini-step-title">Receive & Store Post-Call Data</span>
+                    </div>
+                    <div class="step-badges-row">
+                        <span class="step-sub-badge"
+                            style="color: #fb923c; border-color: rgba(251, 146, 60, 0.3);">Layer 3 (Tenant
+                            Backend)</span>
+                    </div>
+                    <ul class="step-bullet-list">
+                        <li>Our webhook API receives the call data.</li>
+                        <li>Transcript, audio, sentiment and other details are stored in our database (e.g.,
+                            call_transcripts table).</li>
+                    </ul>
+                    <div class="presales-example-box example-orange">
+                        <strong class="presales-example-title">Example:</strong>
+                        <p style="color: #cbd5e1; font-size: 11px; line-height: 1.5;">Transcript and audio saved for
+                            lead ID ld-789</p>
+                    </div>
+                </div>
+
+                <div class="call-flow-step-arrow">→</div>
+
+                <!-- Step 13 -->
+                <div class="mini-step-box step-card-blue call-flow-card">
+                    <div class="mini-step-top">
+                        <span class="mini-step-circle circle-blue">13</span>
+                        <span class="mini-step-title">Data Ready for Next Use</span>
+                    </div>
+                    <div class="step-badges-row">
+                        <span class="step-sub-badge"
+                            style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);">Layer 3 Database</span>
+                    </div>
+                    <ul class="step-bullet-list">
+                        <li>All call data is successfully stored.</li>
+                        <li>This data can be used for further analysis, reporting and future follow-ups.</li>
+                    </ul>
+                    <div class="presales-example-box example-blue">
+                        <strong class="presales-example-title">Example:</strong>
+                        <p style="color: #cbd5e1; font-size: 11px; line-height: 1.5;">Call transcript, sentiment and
+                            recording available in database</p>
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -978,156 +1736,309 @@
                 <span class="section-tag">Step-by-Step Operations</span>
             </div>
             <p style="color: var(--text-secondary); font-size: 13.5px; margin-bottom: 22px; line-height: 1.6;">
-                Sequential operational workflows across all 6 customer lifecycle stages. Each stage maps customer interactions, internal decisions, and business milestone transitions.
+                Sequential operational workflows across all 6 customer lifecycle stages. Each stage maps customer
+                interactions, internal decisions, and business milestone transitions.
             </p>
 
-            <!-- Stage 1 Detailed Flow -->
+            <!-- Stage 1 Detailed Flow (Pre-Sales & AI Calling Flow - End-to-End) -->
             <div class="stage-flow-card">
                 <div class="stage-flow-header">
                     <div class="stage-title-wrap">
                         <span class="stage-badge-num">Stage 01</span>
-                        <span class="stage-main-title">Pre-Sales & Lead Qualification Flow</span>
+                        <span class="stage-main-title">Pre-Sales & AI Calling Flow (End-to-End)</span>
                     </div>
                     <span class="status-badge status-ready">Ready</span>
                 </div>
                 <div class="stage-flow-pipeline">
-                    <div class="mini-step-box">
+                    <!-- Step 1 -->
+                    <div class="mini-step-box step-card-blue">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">1</span>
-                            <span class="mini-step-title">Inquiry Intake</span>
+                            <span class="mini-step-circle circle-blue">1</span>
+                            <span class="mini-step-title">Data Comes From CRM / Channels</span>
                         </div>
-                        <p class="mini-step-desc">Fresh customer inquiries land into our central system from digital channels (Meta Ads, 99acres portal, or website forms).</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            Inquiry received: "Amit Sharma, +91-98765-43210, looking for a 3 BHK in Sector 62 under ₹1.5 Cr".
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);">Salesforce (CRM)</span>
+                            <span class="step-sub-badge"
+                                style="color: #60a5fa; border-color: rgba(96, 165, 250, 0.3);">Meta Ads</span>
+                            <span class="step-sub-badge"
+                                style="color: #22d3ee; border-color: rgba(34, 211, 238, 0.3);">99acres / Housing</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>Lead data comes from CRM, Meta Ads or property portals.</li>
+                            <li>Contains details like name, phone, requirement, budget, location, etc.</li>
+                        </ul>
+                        <div class="presales-example-box example-blue">
+                            <strong class="presales-example-title">Example:</strong>
+                            <div class="example-kv"><span>Name:</span> Amit Sharma</div>
+                            <div class="example-kv"><span>Phone:</span> 98765-XXXXX</div>
+                            <div class="example-kv"><span>Requirement:</span> 3 BHK in Sector 62</div>
+                            <div class="example-kv"><span>Budget:</span> ₹1.5 Crore</div>
                         </div>
                     </div>
-                    <div class="mini-step-box">
+
+                    <!-- Step 2 -->
+                    <div class="mini-step-box step-card-green">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">2</span>
-                            <span class="mini-step-title">Identity & Profile Match</span>
+                            <span class="mini-step-circle circle-green">2</span>
+                            <span class="mini-step-title">Ingest Into Layer 3 Backend</span>
                         </div>
-                        <p class="mini-step-desc">System checks phone & email against our database to de-duplicate contacts and merge past interaction history.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            Match found: Amit visited Tower A in 2024. Prior notes merged so he isn't treated as a stranger.
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #34d399; border-color: rgba(52, 211, 153, 0.3);">Layer 3 (Tenant
+                                Backend)</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>Lead data is ingested into Layer 3 backend and saved in database.</li>
+                            <li>System checks if the customer is new or already exists (based on phone number).</li>
+                            <li>If existing, old history and notes are merged with new data.</li>
+                        </ul>
+                        <div class="presales-example-box example-green">
+                            <strong class="presales-example-title">Example:</strong>
+                            <p style="color: #cbd5e1; font-size: 11px; line-height: 1.55;">System found Amit already
+                                enquired in 2024 for Tower A, so his old profile is updated with new lead data.</p>
                         </div>
                     </div>
-                    <div class="mini-step-box">
+
+                    <!-- Step 3 -->
+                    <div class="mini-step-box step-card-purple">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">3</span>
-                            <span class="mini-step-title">Priority & Intent Scoring</span>
+                            <span class="mini-step-circle circle-purple">3</span>
+                            <span class="mini-step-title">Send to Layer 2 for AI Intelligence & Talking Points</span>
                         </div>
-                        <p class="mini-step-desc">Scoring engine calculates budget alignment against available inventory, loan readiness, and purchase timeline.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            Score: 92/100 (High Priority) — Budget matches Tower B 3 BHK units; home loan is pre-approved.
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #c084fc; border-color: rgba(192, 132, 252, 0.3);">Layer 2 (AI Agents /
+                                MCP)</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>Layer 3 sends the filtered lead to Layer 2.</li>
+                            <li>Layer 2 analyzes lead details (budget, preferences, history).</li>
+                            <li>Using intelligence (from Layer 1 if required) and its own tools, Layer 2 prepares
+                                personalized talking points and call pitch for the bot.</li>
+                        </ul>
+                        <div class="presales-example-box example-purple">
+                            <strong class="presales-example-title">Example: Talking Points</strong>
+                            <ul class="example-bullets">
+                                <li>Pitch Tower B, 14th floor corner 3 BHK</li>
+                                <li>Fits in ₹1.5 Cr budget</li>
+                                <li>Highlight key features</li>
+                                <li>Ask for site visit</li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="mini-step-box">
+
+                    <!-- Step 4 -->
+                    <div class="mini-step-box step-card-orange">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">4</span>
-                            <span class="mini-step-title">AI Voice Call Outreach</span>
+                            <span class="mini-step-circle circle-orange">4</span>
+                            <span class="mini-step-title">AI Calling Bot Places the Call</span>
                         </div>
-                        <p class="mini-step-desc">We dispatch the qualified lead to the AI Calling Bot Service to dial the buyer using personalized talking points.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            AI Bot calls Amit: introduces Tower B corner flats, confirms his budget, and invites him for a site visit.
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #fb923c; border-color: rgba(251, 146, 60, 0.3);">AI Calling Bot Service
+                                (External)</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>Layer 3 sends lead details and Layer 2 talking points to AI Calling Bot Service.</li>
+                            <li>Bot directly calls the customer using the provided pointers.</li>
+                            <li>Bot speaks in natural language, shares relevant property details and invites for a site
+                                visit.</li>
+                        </ul>
+                        <div class="presales-example-box example-orange">
+                            <strong class="presales-example-title">Example:</strong>
+                            <p class="example-quote">"Hello Amit ji, Vida Heights mein aapke budget ke mutabiq ek corner
+                                3 BHK available hai. Kya aap is Saturday isko dekhne aa sakte hain?"</p>
                         </div>
                     </div>
-                    <div class="mini-step-box">
+
+                    <!-- Step 5 -->
+                    <div class="mini-step-box step-card-pink">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">5</span>
-                            <span class="mini-step-title">State Change & Promotion</span>
+                            <span class="mini-step-circle circle-pink">5</span>
+                            <span class="mini-step-title">Post-Call Data & State Change</span>
                         </div>
-                        <p class="mini-step-desc">If buyer expresses interest, call logs "State Change = Yes", updates CRM status to Qualified, and unlocks Stage 02.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            Amit confirms: "Yes, I will visit this Saturday at 11 AM." Lead auto-promoted to Stage 02 (Site Visit).
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #f472b6; border-color: rgba(244, 114, 182, 0.3);">Transcript</span>
+                            <span class="step-sub-badge"
+                                style="color: #f472b6; border-color: rgba(244, 114, 182, 0.3);">Audio Recording</span>
+                            <span class="step-sub-badge"
+                                style="color: #f472b6; border-color: rgba(244, 114, 182, 0.3);">Sentiment
+                                Response</span>
                         </div>
-                    </div>
-                </div>
-                <div class="stage-flow-footer">
-                    <div>
-                        <span style="color: var(--text-muted);">Active Connectors:</span>
-                        <span style="color: #f1f5f9; font-weight: 600; margin-left: 6px;">Portal/Meta Ingestion, Database Entity Matcher, AI Calling Bot Gateway, WhatsApp Cloud</span>
-                    </div>
-                    <div class="milestone-badge">
-                        <span>✓ Milestone: Qualified Lead with Confirmed Site Visit Intent</span>
+                        <ul class="step-bullet-list">
+                            <li>After the call, AI Calling Bot Service sends the call recording, transcript and customer
+                                response to Layer 3 via webhook API.</li>
+                            <li>Layer 3 stores all post-call data in database.</li>
+                            <li>Based on customer response, lead state is updated:</li>
+                        </ul>
+                        <div class="presales-branch-container">
+                            <div class="presales-branch-card branch-yes">
+                                <div class="branch-header"><span class="branch-icon">✓</span> Customer Says YES</div>
+                                <ul class="branch-bullets">
+                                    <li>Lead status = Qualified</li>
+                                    <li>Lead is sent to Stage 2 (Site Visit Desk) for further processing.</li>
+                                </ul>
+                            </div>
+                            <div class="presales-branch-card branch-no">
+                                <div class="branch-header"><span class="branch-icon">✗</span> Customer Says NO / Not
+                                    Answered</div>
+                                <ul class="branch-bullets">
+                                    <li>Lead is scheduled for retry.</li>
+                                    <li>System will trigger follow-up call after 2 days.</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Stage 2 Detailed Flow -->
+            <!-- Stage 2 Detailed Flow (Site Visit & Property Tour Flow) -->
             <div class="stage-flow-card">
                 <div class="stage-flow-header">
                     <div class="stage-title-wrap">
                         <span class="stage-badge-num">Stage 02</span>
                         <span class="stage-main-title">Site Visit & Property Tour Flow</span>
                     </div>
-                    <span class="status-badge status-inprogress">In Progress</span>
+                    <span class="status-badge status-ready">Ready</span>
                 </div>
                 <div class="stage-flow-pipeline">
-                    <div class="mini-step-box">
+                    <!-- Step 1 -->
+                    <div class="mini-step-box step-card-blue">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">1</span>
-                            <span class="mini-step-title">Preferred Slot Booking</span>
+                            <span class="mini-step-circle circle-blue">1</span>
+                            <span class="mini-step-title">Reserve Visit Slot</span>
                         </div>
-                        <p class="mini-step-desc">System reserves buyer's preferred date & time slot in the experience centre calendar to prevent double-booking.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            Slot reserved: Saturday, 25th Oct at 11:00 AM at Vida Experience Center for Amit Sharma & family.
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);">Site Calendar &
+                                Scheduling</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>Buyer books preferred date & time slot for physical site tour.</li>
+                            <li>System checks real-time slot availability at Vida Sales Gallery.</li>
+                            <li>Blocks calendar slot to ensure a dedicated relationship manager is ready.</li>
+                        </ul>
+                        <div class="presales-example-box example-blue">
+                            <strong class="presales-example-title">Example:</strong>
+                            <div class="example-kv"><span>Slot:</span> Saturday, 11:00 AM</div>
+                            <div class="example-kv"><span>Buyer:</span> Amit Sharma</div>
+                            <div class="example-kv"><span>Venue:</span> Vida Sales Gallery, Sector 62</div>
                         </div>
                     </div>
-                    <div class="mini-step-box">
+
+                    <!-- Step 2 -->
+                    <div class="mini-step-box step-card-green">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">2</span>
-                            <span class="mini-step-title">Instant WhatsApp Invite</span>
+                            <span class="mini-step-circle circle-green">2</span>
+                            <span class="mini-step-title">Dispatch WhatsApp Pass</span>
                         </div>
-                        <p class="mini-step-desc">WhatsApp Connector delivers confirmation with Google Maps location pin, digital QR gate pass, and project brochure.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            WhatsApp delivered: "Welcome Amit! Here is your Visit Pass #VH-842, GPS Map link, and Tower B E-Brochure."
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #34d399; border-color: rgba(52, 211, 153, 0.3);">WhatsApp Gateway &
+                                QR</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>Generates unique digital gate entry QR pass and Google Maps pin.</li>
+                            <li>Sends instant WhatsApp confirmation with digital project brochure.</li>
+                            <li>Triggers automated reminder 2 hours prior to visit.</li>
+                        </ul>
+                        <div class="presales-example-box example-green">
+                            <strong class="presales-example-title">Example:</strong>
+                            <div class="example-kv"><span>Pass ID:</span> Gate Pass #VH-842</div>
+                            <div class="example-kv"><span>Map Pin:</span> Sector 62 Sales Experience Center</div>
+                            <div class="example-kv"><span>Attachment:</span> Vida 3 BHK Floor Plans PDF</div>
                         </div>
                     </div>
-                    <div class="mini-step-box">
+
+                    <!-- Step 3 -->
+                    <div class="mini-step-box step-card-purple">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">3</span>
-                            <span class="mini-step-title">RM Assignment</span>
+                            <span class="mini-step-circle circle-purple">3</span>
+                            <span class="mini-step-title">Assign Relationship Manager</span>
                         </div>
-                        <p class="mini-step-desc">System assigns a dedicated on-ground Relationship Manager (RM) and forwards the buyer's full profile dossier.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            Assigned: RM Vikram Singh receives briefing note: "Amit prefers higher floors (12+), park view, ₹1.5 Cr budget."
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #c084fc; border-color: rgba(192, 132, 252, 0.3);">Sales Operations (RM
+                                Desk)</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>System matches and assigns senior RM based on buyer budget and profile.</li>
+                            <li>Pushes Amit's profile, ₹1.5 Cr budget, and family preferences to RM's mobile.</li>
+                            <li>RM pre-selects recommended Tower B units matching criteria.</li>
+                        </ul>
+                        <div class="presales-example-box example-purple">
+                            <strong class="presales-example-title">Example:</strong>
+                            <div class="example-kv"><span>Assigned RM:</span> Vikram Malhotra (Senior RM)</div>
+                            <div class="example-kv"><span>Buyer Brief:</span> High floor, corner 3 BHK, ₹1.5 Cr</div>
+                            <div class="example-kv"><span>Pre-selected:</span> Units B-1202, B-1402</div>
                         </div>
                     </div>
-                    <div class="mini-step-box">
+
+                    <!-- Step 4 -->
+                    <div class="mini-step-box step-card-orange">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">4</span>
-                            <span class="mini-step-title">Physical Sample Flat Tour</span>
+                            <span class="mini-step-circle circle-orange">4</span>
+                            <span class="mini-step-title">Sample Flat Experience Tour</span>
                         </div>
-                        <p class="mini-step-desc">Customer visits site; RM guides them through actual sample apartment, tower lobbies, construction quality, and amenities.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            Tour completed: Amit walks through Unit 1402 (Tower B), inspects master bedroom views and modern layout.
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #fb923c; border-color: rgba(251, 146, 60, 0.3);">Site Experience
+                                Walkthrough</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>RM welcomes Amit with fast-track QR scan check-in at reception.</li>
+                            <li>Guided tour of 14th floor sample unit, balcony view, and sunlight exposure.</li>
+                            <li>Presents clubhouse amenities, EV parking slots, and master layout.</li>
+                        </ul>
+                        <div class="presales-example-box example-orange">
+                            <strong class="presales-example-title">Example:</strong>
+                            <p class="example-quote">Amit inspected Unit 1402 in Tower B; expressed high interest in
+                                corner balcony view & high ceiling.</p>
                         </div>
                     </div>
-                    <div class="mini-step-box">
+
+                    <!-- Step 5 -->
+                    <div class="mini-step-box step-card-pink">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">5</span>
-                            <span class="mini-step-title">Visit Feedback & Shortlist</span>
+                            <span class="mini-step-circle circle-pink">5</span>
+                            <span class="mini-step-title">Tour Outcome & State Change</span>
                         </div>
-                        <p class="mini-step-desc">RM logs buyer feedback, shortlisted floor plans, and pricing discussions into database, transitioning toward booking.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            Feedback logged: "Customer shortlisted Flat B-1402, requested customized payment plan" → Transition to Stage 03.
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #f472b6; border-color: rgba(244, 114, 182, 0.3);">CRM Status
+                                Transition</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>RM logs buyer walkthrough feedback and unit preference into mobile CRM.</li>
+                            <li>System updates customer journey status based on tour conclusion:</li>
+                        </ul>
+                        <div class="presales-branch-container">
+                            <div class="presales-branch-card branch-yes">
+                                <div class="branch-header"><span class="branch-icon">✓</span> Customer Shortlists &
+                                    Decides to Book</div>
+                                <ul class="branch-bullets">
+                                    <li>Unit B-1402 shortlisted in system.</li>
+                                    <li>Directly sent to Stage 03 (Booking & Token Advance Desk).</li>
+                                </ul>
+                            </div>
+                            <div class="presales-branch-card branch-no">
+                                <div class="branch-header"><span class="branch-icon">✗</span> Undecided / Needs
+                                    Follow-up</div>
+                                <ul class="branch-bullets">
+                                    <li>Added to RM nurture queue for Tower C alternative options.</li>
+                                    <li>Follow-up call scheduled after 48 hours.</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="stage-flow-footer">
                     <div>
-                        <span style="color: var(--text-muted);">Active Connectors:</span>
-                        <span style="color: #f1f5f9; font-weight: 600; margin-left: 6px;">WhatsApp API, Tour Database (domain/tour), Executive Roster Engine</span>
+                        <span style="color: var(--text-muted);">Data Journey:</span>
+                        <span style="color: #f1f5f9; font-weight: 600; margin-left: 6px;">Calendar Reservation →
+                            WhatsApp Gate Pass → Physical Site Tour → Booking Desk (Stage 03)</span>
                     </div>
                     <div class="milestone-badge">
                         <span>✓ Milestone: Completed Site Visit & Unit Shortlisted</span>
@@ -1135,76 +2046,153 @@
                 </div>
             </div>
 
-            <!-- Stage 3 Detailed Flow -->
+            <!-- Stage 3 Detailed Flow (Booking & Token Advance Flow) -->
             <div class="stage-flow-card">
                 <div class="stage-flow-header">
                     <div class="stage-title-wrap">
                         <span class="stage-badge-num">Stage 03</span>
                         <span class="stage-main-title">Booking & Token Advance Flow</span>
                     </div>
-                    <span class="status-badge status-inprogress">In Progress</span>
+                    <span class="status-badge status-ready">Ready</span>
                 </div>
                 <div class="stage-flow-pipeline">
-                    <div class="mini-step-box">
+                    <!-- Step 1 -->
+                    <div class="mini-step-box step-card-blue">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">1</span>
-                            <span class="mini-step-title">Unit Selection & Lock</span>
+                            <span class="mini-step-circle circle-blue">1</span>
+                            <span class="mini-step-title">Lock Flat in System</span>
                         </div>
-                        <p class="mini-step-desc">Buyer chooses specific flat; backend instantly places a real-time lock on that unit in inventory to prevent duplicate booking.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            Unit B-1402 (Tower B, 14th Floor, 1,850 sq.ft) marked "Temporarily Reserved - Holding for 48 Hours".
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);">Inventory Engine & ERP
+                                Lock</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>System instantly marks selected Unit B-1402 as "Reserved" in inventory database.</li>
+                            <li>Locks unit across all portal connectors to prevent double-booking.</li>
+                            <li>Starts 48-hour reservation window for token payment completion.</li>
+                        </ul>
+                        <div class="presales-example-box example-blue">
+                            <strong class="presales-example-title">Example:</strong>
+                            <div class="example-kv"><span>Unit:</span> Flat B-1402 (Tower B, 14th Floor)</div>
+                            <div class="example-kv"><span>Hold Status:</span> 48-Hour Temporary Hold for Amit</div>
+                            <div class="example-kv"><span>Agreed Value:</span> ₹1.48 Crore</div>
                         </div>
                     </div>
-                    <div class="mini-step-box">
+
+                    <!-- Step 2 -->
+                    <div class="mini-step-box step-card-green">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">2</span>
-                            <span class="mini-step-title">Official Cost Sheet</span>
+                            <span class="mini-step-circle circle-green">2</span>
+                            <span class="mini-step-title">Generate Cost Sheet</span>
                         </div>
-                        <p class="mini-step-desc">Pricing engine calculates base rate, floor rise, parking allotment, clubhouse fee, and generates a milestone cost sheet.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            Cost Sheet: Total agreement value ₹1.48 Cr + GST, including 2 covered car parks and installment schedule.
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #34d399; border-color: rgba(52, 211, 153, 0.3);">Pricing & Cost
+                                Engine</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>Calculates complete price breakdown: base price, floor rise, parking, and GST.</li>
+                            <li>Constructs milestone payment schedule linked to civil construction stages.</li>
+                            <li>Outputs official, branded 1-page PDF cost sheet sent to customer.</li>
+                        </ul>
+                        <div class="presales-example-box example-green">
+                            <strong class="presales-example-title">Example:</strong>
+                            <div class="example-kv"><span>Total Price:</span> ₹1.48 Cr + GST</div>
+                            <div class="example-kv"><span>Booking Token:</span> ₹2,00,000 (Advance)</div>
+                            <div class="example-kv"><span>Payment Plan:</span> Construction-Linked (CLP)</div>
                         </div>
                     </div>
-                    <div class="mini-step-box">
+
+                    <!-- Step 3 -->
+                    <div class="mini-step-box step-card-purple">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">3</span>
-                            <span class="mini-step-title">Token Advance Payment</span>
+                            <span class="mini-step-circle circle-purple">3</span>
+                            <span class="mini-step-title">Collect Token Money</span>
                         </div>
-                        <p class="mini-step-desc">System generates secure payment link or logs bank NEFT/RTGS transaction to collect the initial booking advance.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            Payment captured: ₹2,00,000 token advance paid online via NetBanking; instant bank reference generated.
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #c084fc; border-color: rgba(192, 132, 252, 0.3);">Payment Gateway &
+                                Escrow</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>Dispatches secure 1-click payment link via WhatsApp and email.</li>
+                            <li>Supports instant UPI, NetBanking, RTGS, and debit/credit payment.</li>
+                            <li>Payment webhook confirms credit directly into builder RERA escrow account.</li>
+                        </ul>
+                        <div class="presales-example-box example-purple">
+                            <strong class="presales-example-title">Example:</strong>
+                            <div class="example-kv"><span>Amount:</span> ₹2,00,000 Token Advance</div>
+                            <div class="example-kv"><span>Status:</span> Paid via UPI / NetBanking</div>
+                            <div class="example-kv"><span>Escrow TXN:</span> TXN-VIDA-99281 Confirmed</div>
                         </div>
                     </div>
-                    <div class="mini-step-box">
+
+                    <!-- Step 4 -->
+                    <div class="mini-step-box step-card-orange">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">4</span>
-                            <span class="mini-step-title">Digital Receipt & Allotment</span>
+                            <span class="mini-step-circle circle-orange">4</span>
+                            <span class="mini-step-title">Issue Allotment Letter</span>
                         </div>
-                        <p class="mini-step-desc">Document engine generates official digital booking receipt and provisional allotment letter, dispatched via email & WhatsApp.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            Booking docket #VIDA-BK-912 dispatched with digital signature, receipt, and builder allotment stamp.
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #fb923c; border-color: rgba(251, 146, 60, 0.3);">Document Engine & Digital
+                                Seal</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>System auto-generates official digital receipt and provisional allotment letter.</li>
+                            <li>Attaches certified digital company signature and cryptographic QR seal.</li>
+                            <li>Delivers complete allotment PDF docket to Amit on WhatsApp and email.</li>
+                        </ul>
+                        <div class="presales-example-box example-orange">
+                            <strong class="presales-example-title">Example:</strong>
+                            <div class="example-kv"><span>Document:</span> Allotment Letter #VIDA-912</div>
+                            <div class="example-kv"><span>Allotted Unit:</span> Flat B-1402 + Covered Parking P2-18
+                            </div>
+                            <div class="example-kv"><span>Verification:</span> QR Authenticated</div>
                         </div>
                     </div>
-                    <div class="mini-step-box">
+
+                    <!-- Step 5 -->
+                    <div class="mini-step-box step-card-pink">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">5</span>
-                            <span class="mini-step-title">Digital KYC Verification</span>
+                            <span class="mini-step-circle circle-pink">5</span>
+                            <span class="mini-step-title">Verify KYC & Confirm Unit</span>
                         </div>
-                        <p class="mini-step-desc">Buyer securely uploads PAN card, Aadhaar, and photos via portal; system verifies credentials and seals booking status.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            KYC verified: PAN & Aadhaar authenticated. Unit B-1402 officially marked "Sold / In-Progress" → Sent to Accounts.
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #f472b6; border-color: rgba(244, 114, 182, 0.3);">Compliance & Legal
+                                Lock</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>Buyer uploads PAN card and Aadhaar via secure digital document link.</li>
+                            <li>System validates IDs and triggers permanent state change in backend:</li>
+                        </ul>
+                        <div class="presales-branch-container">
+                            <div class="presales-branch-card branch-yes">
+                                <div class="branch-header"><span class="branch-icon">✓</span> KYC Verified & Booking
+                                    Confirmed</div>
+                                <ul class="branch-bullets">
+                                    <li>Unit B-1402 permanently marked "SOLD".</li>
+                                    <li>Data dispatched to Stage 04 (Procurement) & Stage 05 (Accounts).</li>
+                                </ul>
+                            </div>
+                            <div class="presales-branch-card branch-no">
+                                <div class="branch-header"><span class="branch-icon">✗</span> KYC Incomplete / Payment
+                                    Timeout</div>
+                                <ul class="branch-bullets">
+                                    <li>Automated 24-hour reminder sent to customer.</li>
+                                    <li>Unit hold automatically released if payment expires.</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="stage-flow-footer">
                     <div>
-                        <span style="color: var(--text-muted);">Active Connectors:</span>
-                        <span style="color: #f1f5f9; font-weight: 600; margin-left: 6px;">Unit Inventory Database, Payment Gateway, CRM Deal Pipeline, KYC Portal</span>
+                        <span style="color: var(--text-muted);">Data Journey:</span>
+                        <span style="color: #f1f5f9; font-weight: 600; margin-left: 6px;">Inventory Hold → Cost
+                            Calculation → Token Payment → Official Allotment → Accounts & Procurement</span>
                     </div>
                     <div class="milestone-badge">
                         <span>✓ Milestone: Unit Officially Booked & Token Advance Received</span>
@@ -1212,76 +2200,151 @@
                 </div>
             </div>
 
-            <!-- Stage 4 Detailed Flow -->
+            <!-- Stage 4 Detailed Flow (Procurement & Material Delivery Flow) -->
             <div class="stage-flow-card">
                 <div class="stage-flow-header">
                     <div class="stage-title-wrap">
                         <span class="stage-badge-num">Stage 04</span>
                         <span class="stage-main-title">Procurement & Material Delivery Flow</span>
                     </div>
-                    <span class="status-badge status-inprogress">In Progress</span>
+                    <span class="status-badge status-ready">Ready</span>
                 </div>
                 <div class="stage-flow-pipeline">
-                    <div class="mini-step-box">
+                    <!-- Step 1 -->
+                    <div class="mini-step-box step-card-blue">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">1</span>
-                            <span class="mini-step-title">Construction Milestone Demand</span>
+                            <span class="mini-step-circle circle-blue">1</span>
+                            <span class="mini-step-title">Construction Trigger</span>
                         </div>
-                        <p class="mini-step-desc">Civil engineering team logs structural stage completion (e.g. 14th slab cast), triggering material requisitions for unit finishing.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            Milestone trigger: Tower B 14th slab cast; requisition raised for Unit B-1402 internal wiring & tiling.
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);">Civil Engineering & IoT
+                                Sensors</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>Site civil engineers log that 14th floor slab has been successfully cast.</li>
+                            <li>System triggers automatic interior material requisition for Flat B-1402.</li>
+                            <li>Pushes Bill of Materials (BOM) specifications to procurement engine.</li>
+                        </ul>
+                        <div class="presales-example-box example-blue">
+                            <strong class="presales-example-title">Example:</strong>
+                            <div class="example-kv"><span>Milestone:</span> 14th Floor Slab Cast & Cured</div>
+                            <div class="example-kv"><span>Requisition:</span> BOM finishing for Unit B-1402</div>
+                            <div class="example-kv"><span>Req ID:</span> REQ-MAT-1402</div>
                         </div>
                     </div>
-                    <div class="mini-step-box">
+
+                    <!-- Step 2 -->
+                    <div class="mini-step-box step-card-green">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">2</span>
-                            <span class="mini-step-title">Vendor Purchase Orders (PO)</span>
+                            <span class="mini-step-circle circle-green">2</span>
+                            <span class="mini-step-title">Send Vendor Orders</span>
                         </div>
-                        <p class="mini-step-desc">Procurement module issues purchase orders to verified suppliers for vitrified tiles, sanitary fixtures, conduits, and doors.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            PO #PO-8819 dispatched: 450 sq.m Italian vitrified tiles from Kajaria and CP sanitary fittings from Kohler.
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #34d399; border-color: rgba(52, 211, 153, 0.3);">Procurement & Supply
+                                Chain</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>System generates Purchase Orders (PO) for pre-approved corporate suppliers.</li>
+                            <li>Orders vitrified Italian-finish tiles, sanitary fixtures, and copper wiring.</li>
+                            <li>Syncs delivery dates with site logistics and crane lift slots.</li>
+                        </ul>
+                        <div class="presales-example-box example-green">
+                            <strong class="presales-example-title">Example:</strong>
+                            <div class="example-kv"><span>PO #8819:</span> Kajaria Ceramics (1,200 sq.ft tiles)</div>
+                            <div class="example-kv"><span>PO #8820:</span> Kohler India (Sanitary tapware)</div>
+                            <div class="example-kv"><span>ETA:</span> Within 7 days to site warehouse</div>
                         </div>
                     </div>
-                    <div class="mini-step-box">
+
+                    <!-- Step 3 -->
+                    <div class="mini-step-box step-card-purple">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">3</span>
-                            <span class="mini-step-title">Site Delivery & Inspection</span>
+                            <span class="mini-step-circle circle-purple">3</span>
+                            <span class="mini-step-title">Site Quality Inspection</span>
                         </div>
-                        <p class="mini-step-desc">Materials arrive at project warehouse; site quality inspectors check specifications against standards and log batch clearance.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            Inspection logged: Tile consignment Batch #T-402 inspected for zero cracks and uniform shade; approved.
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #c084fc; border-color: rgba(192, 132, 252, 0.3);">Warehouse & Quality
+                                QA</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>Consignment trucks arrive at project site warehouse.</li>
+                            <li>Quality inspector verifies tiles, plumbing, and cables against breakage and specs.</li>
+                            <li>Logs material approval receipt into digital inventory ledger.</li>
+                        </ul>
+                        <div class="presales-example-box example-purple">
+                            <strong class="presales-example-title">Example:</strong>
+                            <div class="example-kv"><span>Batch:</span> 450 tile boxes shade-inspected</div>
+                            <div class="example-kv"><span>Defect Rate:</span> 0.0% (Inspection Passed)</div>
+                            <div class="example-kv"><span>Ledger Entry:</span> Approved for Tower B, Floor 14</div>
                         </div>
                     </div>
-                    <div class="mini-step-box">
+
+                    <!-- Step 4 -->
+                    <div class="mini-step-box step-card-orange">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">4</span>
-                            <span class="mini-step-title">Interior Fit-out Execution</span>
+                            <span class="mini-step-circle circle-orange">4</span>
+                            <span class="mini-step-title">Fit-out Inside Flat</span>
                         </div>
-                        <p class="mini-step-desc">Contractors execute internal plumbing, electrical cabling, floor tiling, wall plastering, and ceiling works inside the flat.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            Unit B-1402 update: Flooring completed, bathroom fittings installed, first coat of primer applied.
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #fb923c; border-color: rgba(251, 146, 60, 0.3);">Contractors & Interior
+                                Fit-out</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>Contractors install flooring, electrical conduits, sanitary fittings, and doors.</li>
+                            <li>Plumbing lines pressure-tested for zero joint leakages.</li>
+                            <li>Daily progress photos uploaded directly to site supervisor dashboard.</li>
+                        </ul>
+                        <div class="presales-example-box example-orange">
+                            <strong class="presales-example-title">Example:</strong>
+                            <div class="example-kv"><span>Flooring:</span> Vitrified tiling complete</div>
+                            <div class="example-kv"><span>Electrical:</span> Modular switchboards wired</div>
+                            <div class="example-kv"><span>Painting:</span> Primer & 1st coat applied</div>
                         </div>
                     </div>
-                    <div class="mini-step-box">
+
+                    <!-- Step 5 -->
+                    <div class="mini-step-box step-card-pink">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">5</span>
-                            <span class="mini-step-title">Pre-Handover Quality Sign-off</span>
+                            <span class="mini-step-circle circle-pink">5</span>
+                            <span class="mini-step-title">Quality Audit & Sign-off</span>
                         </div>
-                        <p class="mini-step-desc">Chief site engineer conducts 85-point inspection (pressure tests, electrical lines, door alignments) and issues unit clearance.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            Certificate issued: Unit B-1402 certified 100% physically complete and ready for customer walkthrough.
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #f472b6; border-color: rgba(244, 114, 182, 0.3);">Chief Site Engineer
+                                Audit</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>Chief site engineer performs 80-point quality audit checklist across all rooms.</li>
+                            <li>Verifies wall finishes, door alignment, and electrical circuit integrity:</li>
+                        </ul>
+                        <div class="presales-branch-container">
+                            <div class="presales-branch-card branch-yes">
+                                <div class="branch-header"><span class="branch-icon">✓</span> Quality Audit Passed (100%
+                                    Certified)</div>
+                                <ul class="branch-bullets">
+                                    <li>Flat B-1402 certified construction complete.</li>
+                                    <li>Data sent to Stage 06 (Possession & Handover Desk).</li>
+                                </ul>
+                            </div>
+                            <div class="presales-branch-card branch-no">
+                                <div class="branch-header"><span class="branch-icon">✗</span> Minor Snags Logged</div>
+                                <ul class="branch-bullets">
+                                    <li>Punch-list assigned to contractor team.</li>
+                                    <li>Mandatory 48-hour resolution window applied.</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="stage-flow-footer">
                     <div>
-                        <span style="color: var(--text-muted);">Active Connectors:</span>
-                        <span style="color: #f1f5f9; font-weight: 600; margin-left: 6px;">Procurement Repository (domain/procurement), Site Quality Ledger, Inventory ERP</span>
+                        <span style="color: var(--text-muted);">Data Journey:</span>
+                        <span style="color: #f1f5f9; font-weight: 600; margin-left: 6px;">Slab Milestone → Vendor Orders
+                            → Site Material Check → Unit Finishing → Ready for Handover</span>
                     </div>
                     <div class="milestone-badge">
                         <span>✓ Milestone: Unit Construction & Fit-out 100% Certified</span>
@@ -1289,7 +2352,7 @@
                 </div>
             </div>
 
-            <!-- Stage 5 Detailed Flow -->
+            <!-- Stage 5 Detailed Flow (Accounts & Financial Billing Flow) -->
             <div class="stage-flow-card">
                 <div class="stage-flow-header">
                     <div class="stage-title-wrap">
@@ -1299,66 +2362,142 @@
                     <span class="status-badge status-notready">Connector Pending</span>
                 </div>
                 <div class="stage-flow-pipeline">
-                    <div class="mini-step-box">
+                    <!-- Step 1 -->
+                    <div class="mini-step-box step-card-blue">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">1</span>
-                            <span class="mini-step-title">Milestone Demand Notice</span>
+                            <span class="mini-step-circle circle-blue">1</span>
+                            <span class="mini-step-title">Installment Demand</span>
                         </div>
-                        <p class="mini-step-desc">As structural stages are certified by site engineers, billing engine automatically generates the next installment demand note.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            Demand raised: "Tower B 14th Slab Completed — 10% installment of ₹14.80 Lakhs payable by 15th Nov".
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);">Milestone Billing
+                                Engine</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>When civil engineers verify slab completion, billing engine calculates demand.</li>
+                            <li>Applies contract terms (10:80:10 CLP) to determine customer installment.</li>
+                            <li>Computes GST tax breakdown and customer ledger credits.</li>
+                        </ul>
+                        <div class="presales-example-box example-blue">
+                            <strong class="presales-example-title">Example:</strong>
+                            <div class="example-kv"><span>Milestone:</span> 14th Floor Slab Completion Demand</div>
+                            <div class="example-kv"><span>Installment:</span> 10% Due (₹14.80 Lakhs)</div>
+                            <div class="example-kv"><span>Due Date:</span> 15 days from notice dispatch</div>
                         </div>
                     </div>
-                    <div class="mini-step-box">
+
+                    <!-- Step 2 -->
+                    <div class="mini-step-box step-card-green">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">2</span>
-                            <span class="mini-step-title">Digital Invoice & Payment Link</span>
+                            <span class="mini-step-circle circle-green">2</span>
+                            <span class="mini-step-title">Send WhatsApp Invoice</span>
                         </div>
-                        <p class="mini-step-desc">System dispatches GST-compliant tax invoice along with a direct 1-click NetBanking/UPI payment link via WhatsApp and email.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            WhatsApp sent to Amit: "Invoice #INV-1108 ready. Pay securely via Axis Bank Virtual Account Link."
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #34d399; border-color: rgba(52, 211, 153, 0.3);">WhatsApp Billing
+                                Gateway</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>System dispatches official GST tax invoice on buyer's WhatsApp and email.</li>
+                            <li>Provides 1-click secure payment link for NetBanking, NEFT/RTGS, and UPI.</li>
+                            <li>Attaches downloadable PDF invoice with builder virtual account details.</li>
+                        </ul>
+                        <div class="presales-example-box example-green">
+                            <strong class="presales-example-title">Example:</strong>
+                            <div class="example-kv"><span>Invoice ID:</span> GST Tax Invoice #INV-1108</div>
+                            <div class="example-kv"><span>Amount Due:</span> ₹14,80,000 + GST</div>
+                            <div class="example-kv"><span>Payment Link:</span> 1-Click NetBanking Link Attached</div>
                         </div>
                     </div>
-                    <div class="mini-step-box">
+
+                    <!-- Step 3 -->
+                    <div class="mini-step-box step-card-purple">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">3</span>
-                            <span class="mini-step-title">Bank Credit & Instant Receipt</span>
+                            <span class="mini-step-circle circle-purple">3</span>
+                            <span class="mini-step-title">Bank Credit & Receipt</span>
                         </div>
-                        <p class="mini-step-desc">Once funds reach the escrow account, the payment connector auto-reconciles bank UTR numbers and dispatches stamped receipt.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            Payment cleared: ₹14,80,000 credited; receipt #RCPT-7729 automatically sent to customer within 60 seconds.
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #c084fc; border-color: rgba(192, 132, 252, 0.3);">Escrow Bank
+                                Webhook</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>Bank confirms payment credited into builder RERA escrow account.</li>
+                            <li>Webhook triggers automated ledger reconciliation in Layer 3 backend.</li>
+                            <li>Stamped digital receipt generated and dispatched to buyer within 30 seconds.</li>
+                        </ul>
+                        <div class="presales-example-box example-purple">
+                            <strong class="presales-example-title">Example:</strong>
+                            <div class="example-kv"><span>Credit Confirmed:</span> ₹14,80,000 received via RTGS</div>
+                            <div class="example-kv"><span>Receipt:</span> Stamped Receipt #RCP-7729 sent</div>
+                            <div class="example-kv"><span>Speed:</span> Dispatched in 30 seconds</div>
                         </div>
                     </div>
-                    <div class="mini-step-box">
+
+                    <!-- Step 4 -->
+                    <div class="mini-step-box step-card-orange">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">4</span>
-                            <span class="mini-step-title">Corporate Ledger Sync (Tally)</span>
+                            <span class="mini-step-circle circle-orange">4</span>
+                            <span class="mini-step-title">Sync Corporate Tally</span>
                         </div>
-                        <p class="mini-step-desc">Payment credits, GST splits, and builder ledger vouchers are formatted for push into financial software (Pending Client Tally API).</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            Status: Accounting vouchers formatted; awaiting client IT team to provide Tally API access credentials.
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #fb923c; border-color: rgba(251, 146, 60, 0.3);">Tally ERP Sync (Pending
+                                API)</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>Payment and GST vouchers formatted for company accounts synchronization.</li>
+                            <li>Prepared to push ledger entries directly into corporate Tally ERP.</li>
+                            <li>Status: Ready in Layer 3 backend; pending client IT to provide Tally API access.</li>
+                        </ul>
+                        <div class="presales-example-box example-orange">
+                            <strong class="presales-example-title">Example:</strong>
+                            <div class="example-kv"><span>Voucher:</span> Journal Voucher #JV-2026-904</div>
+                            <div class="example-kv"><span>Integration:</span> Awaiting client IT Tally API credentials
+                            </div>
+                            <div class="example-kv"><span>Fallback:</span> CSV export available for finance</div>
                         </div>
                     </div>
-                    <div class="mini-step-box">
+
+                    <!-- Step 5 -->
+                    <div class="mini-step-box step-card-pink">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">5</span>
-                            <span class="mini-step-title">Payment Nurture & Reminders</span>
+                            <span class="mini-step-circle circle-pink">5</span>
+                            <span class="mini-step-title">Ledger Balance & Reminders</span>
                         </div>
-                        <p class="mini-step-desc">For unpaid installments, automated polite reminder schedules via WhatsApp and SMS keep buyers updated without harsh manual calls.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            Automated note: Friendly reminder sent 3 days before due date with breakdown of remaining balance.
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #f472b6; border-color: rgba(244, 114, 182, 0.3);">Financial Balance &
+                                Recovery</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>System updates customer statement of account and tracks payment timelines:</li>
+                        </ul>
+                        <div class="presales-branch-container">
+                            <div class="presales-branch-card branch-yes">
+                                <div class="branch-header"><span class="branch-icon">✓</span> Payment Received On Time
+                                </div>
+                                <ul class="branch-bullets">
+                                    <li>Outstanding balance cleared in database.</li>
+                                    <li>"Milestone Cleared" badge updated on customer portal.</li>
+                                </ul>
+                            </div>
+                            <div class="presales-branch-card branch-no">
+                                <div class="branch-header"><span class="branch-icon">✗</span> Overdue / Payment Pending
+                                </div>
+                                <ul class="branch-bullets">
+                                    <li>Polite, courteous WhatsApp reminder sent 3 days before due date.</li>
+                                    <li>No annoying calls; interest calculation paused.</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="stage-flow-footer">
                     <div>
-                        <span style="color: var(--text-muted);">Active Connectors:</span>
-                        <span style="color: #fb7185; font-weight: 600; margin-left: 6px;">Tally ERP Connector (Pending Client Credentials), Invoicing Engine, Payment Gateway Webhook</span>
+                        <span style="color: var(--text-muted);">Data Journey:</span>
+                        <span style="color: #fb7185; font-weight: 600; margin-left: 6px;">Civil Milestone → WhatsApp
+                            Invoice Link → Escrow Bank Credit → Tally ERP Sync (Pending API)</span>
                     </div>
                     <div class="milestone-badge">
                         <span>✓ Milestone: Installment Collected & Ledger Reconciled</span>
@@ -1366,76 +2505,152 @@
                 </div>
             </div>
 
-            <!-- Stage 6 Detailed Flow -->
+            <!-- Stage 6 Detailed Flow (Post-Sales & Possession Handover Flow) -->
             <div class="stage-flow-card">
                 <div class="stage-flow-header">
                     <div class="stage-title-wrap">
                         <span class="stage-badge-num">Stage 06</span>
                         <span class="stage-main-title">Post-Sales & Possession Handover Flow</span>
                     </div>
-                    <span class="status-badge status-inprogress">In Progress</span>
+                    <span class="status-badge status-ready">Ready</span>
                 </div>
                 <div class="stage-flow-pipeline">
-                    <div class="mini-step-box">
+                    <!-- Step 1 -->
+                    <div class="mini-step-box step-card-blue">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">1</span>
-                            <span class="mini-step-title">Financial Clearance & NOC</span>
+                            <span class="mini-step-circle circle-blue">1</span>
+                            <span class="mini-step-title">Check Dues & Issue NOC</span>
                         </div>
-                        <p class="mini-step-desc">Finance department verifies 100% cost sheet settlement, meter connection charges, and society sinking fund, issuing a Final NOC.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            NOC Cleared: All installments, maintenance corpus, and legal documentation fees settled at ₹0 balance.
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);">Accounts Audit & RERA
+                                Clear</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>Accounts verifies 100% flat installments, electricity, and society deposits.</li>
+                            <li>Checks that all milestone receipts have been cleared in escrow.</li>
+                            <li>Issues official digitally signed Financial Clearance Certificate (NOC).</li>
+                        </ul>
+                        <div class="presales-example-box example-blue">
+                            <strong class="presales-example-title">Example:</strong>
+                            <div class="example-kv"><span>Audit Result:</span> ₹0.00 outstanding dues</div>
+                            <div class="example-kv"><span>Deposits:</span> IFMS, meter & society dues cleared</div>
+                            <div class="example-kv"><span>NOC Issued:</span> Financial NOC #NOC-VIDA-402</div>
                         </div>
                     </div>
-                    <div class="mini-step-box">
+
+                    <!-- Step 2 -->
+                    <div class="mini-step-box step-card-green">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">2</span>
-                            <span class="mini-step-title">Joint Snag Walkthrough</span>
+                            <span class="mini-step-circle circle-green">2</span>
+                            <span class="mini-step-title">Joint Flat Inspection</span>
                         </div>
-                        <p class="mini-step-desc">Buyer and customer-care engineer inspect the finished flat room-by-room; any minor cosmetic touch-up is logged in mobile app.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            Walkthrough: Amit inspects Unit B-1402; notes minor silicone touch-up on shower glass and railing polish.
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #34d399; border-color: rgba(52, 211, 153, 0.3);">Possession Desk & Mobile
+                                Audit</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>Buyer and handover engineer conduct detailed room-by-room walkthrough.</li>
+                            <li>Tests electrical outlets, sanitary fittings, balcony drainage, and door locks.</li>
+                            <li>Any minor touch-up is digitally recorded on mobile tablet with photos.</li>
+                        </ul>
+                        <div class="presales-example-box example-green">
+                            <strong class="presales-example-title">Example:</strong>
+                            <div class="example-kv"><span>Walkthrough:</span> Amit inspects Flat B-1402</div>
+                            <div class="example-kv"><span>Observation:</span> Minor paint touch-up on balcony railing
+                            </div>
+                            <div class="example-kv"><span>Punch-list:</span> Digital snag item #SNAG-01 logged</div>
                         </div>
                     </div>
-                    <div class="mini-step-box">
+
+                    <!-- Step 3 -->
+                    <div class="mini-step-box step-card-purple">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">3</span>
-                            <span class="mini-step-title">Snag Rectification & Approval</span>
+                            <span class="mini-step-circle circle-purple">3</span>
+                            <span class="mini-step-title">Fix Items (48 Hours)</span>
                         </div>
-                        <p class="mini-step-desc">Dedicated on-site snag rectification team completes all logged items within 48-72 hours; buyer reviews and signs digital acceptance.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            Rectification done: All 2 punch-list items resolved; Amit inspects and signs digital clearance on tablet.
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #c084fc; border-color: rgba(192, 132, 252, 0.3);">Maintenance Rapid
+                                Response</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>Dedicated maintenance quick-response team fixes noted snags within 48 hours.</li>
+                            <li>Lead QA technician re-tests plumbing, electrical, and surface finishes.</li>
+                            <li>Customer receives photo confirmation on WhatsApp and signs acceptance.</li>
+                        </ul>
+                        <div class="presales-example-box example-purple">
+                            <strong class="presales-example-title">Example:</strong>
+                            <div class="example-kv"><span>Rectification:</span> Balcony touch-up completed in 24 hrs
+                            </div>
+                            <div class="example-kv"><span>QA Sign-off:</span> 100% flawless certification</div>
+                            <div class="example-kv"><span>Customer Approval:</span> Signed digitally via WhatsApp</div>
                         </div>
                     </div>
-                    <div class="mini-step-box">
+
+                    <!-- Step 4 -->
+                    <div class="mini-step-box step-card-orange">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">4</span>
-                            <span class="mini-step-title">Key Handover & Possession Kit</span>
+                            <span class="mini-step-circle circle-orange">4</span>
+                            <span class="mini-step-title">Hand Over Keys & Docket</span>
                         </div>
-                        <p class="mini-step-desc">Official handover ceremony: homeowner receives original unit brass keys, appliance warranty cards, blueprints, and Possession Letter.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            Handover: Possession Certificate #POSS-2025-412 signed; brass keys and welcome gift hamper presented.
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #fb923c; border-color: rgba(251, 146, 60, 0.3);">Official Handover
+                                Ceremony</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>Official key handover ceremony conducted at Vida Sales Clubhouse.</li>
+                            <li>Amit receives brass keys, appliance warranty cards, and home manual.</li>
+                            <li>Buyer and builder executive sign formal Possession Letter and handover deed.</li>
+                        </ul>
+                        <div class="presales-example-box example-orange">
+                            <strong class="presales-example-title">Example:</strong>
+                            <div class="example-kv"><span>Ceremony:</span> Keys to Flat B-1402 handed over</div>
+                            <div class="example-kv"><span>Possession Docket:</span> Letter #POSS-412 signed</div>
+                            <div class="example-kv"><span>Kit:</span> Brass keys, EV transponder, warranties</div>
                         </div>
                     </div>
-                    <div class="mini-step-box">
+
+                    <!-- Step 5 -->
+                    <div class="mini-step-box step-card-pink">
                         <div class="mini-step-top">
-                            <span class="mini-step-circle">5</span>
-                            <span class="mini-step-title">Community Onboarding</span>
+                            <span class="mini-step-circle circle-pink">5</span>
+                            <span class="mini-step-title">Resident App & Community</span>
                         </div>
-                        <p class="mini-step-desc">New homeowner is enrolled into the Vida Resident Mobile App for digital visitor entry gate-passes, clubhouse booking, and society dues.</p>
-                        <div class="mini-step-example">
-                            <strong>Example</strong>
-                            Onboarded: Amit's profile activated on Vida Community App with Flat B-1402 profile and EV parking slot #P2-18.
+                        <div class="step-badges-row">
+                            <span class="step-sub-badge"
+                                style="color: #f472b6; border-color: rgba(244, 114, 182, 0.3);">Vida Community
+                                SuperApp</span>
+                        </div>
+                        <ul class="step-bullet-list">
+                            <li>System provisions Amit's resident profile on the Vida Community SuperApp:</li>
+                        </ul>
+                        <div class="presales-branch-container">
+                            <div class="presales-branch-card branch-yes">
+                                <div class="branch-header"><span class="branch-icon">✓</span> Resident Onboarded &
+                                    Welcomed</div>
+                                <ul class="branch-bullets">
+                                    <li>Profile active with Flat B-1402 & EV slot #P2-18.</li>
+                                    <li>Access to gate pass generator, clubhouse booking & society billing.</li>
+                                </ul>
+                            </div>
+                            <div class="presales-branch-card branch-no">
+                                <div class="branch-header"><span class="branch-icon">✗</span> Assistance Required</div>
+                                <ul class="branch-bullets">
+                                    <li>Personal concierge RM assigned for 30-day move-in support.</li>
+                                    <li>Service elevator slot scheduled for move-in day.</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="stage-flow-footer">
                     <div>
-                        <span style="color: var(--text-muted);">Active Connectors:</span>
-                        <span style="color: #f1f5f9; font-weight: 600; margin-left: 6px;">Handover Certificate Generator, Resident Portal, WhatsApp Community Bot</span>
+                        <span style="color: var(--text-muted);">Data Journey:</span>
+                        <span style="color: #f1f5f9; font-weight: 600; margin-left: 6px;">Financial Clearance → Joint
+                            Snag Walkthrough → 48-Hr Rectification → Key Handover → Resident App</span>
                     </div>
                     <div class="milestone-badge">
                         <span>✓ Milestone: Keys Handed Over & Resident Welcomed</span>
@@ -1453,7 +2668,8 @@
                 <span class="section-tag">Codebase-Audited</span>
             </div>
             <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 16px;">
-                Verified technical audit of all connectors, core agents, specialized agents, and supporting tools in the Layer 3 repository.
+                Verified technical audit of all connectors, core agents, specialized agents, and supporting tools in the
+                Layer 3 repository.
             </p>
 
             <div class="table-wrap">
@@ -1472,7 +2688,9 @@
                         <!-- Connectors -->
                         <tr>
                             <td><span class="type-badge type-connector">Connector</span></td>
-                            <td><div class="component-name">Excel / CSV Lead Ingestion Adapter</div></td>
+                            <td>
+                                <div class="component-name">Excel / CSV Lead Ingestion Adapter</div>
+                            </td>
                             <td>Pre-Sales Bulk Ingestion</td>
                             <td>Layer 3 (<code>adapters/excel.py</code>)</td>
                             <td><span class="status-badge status-ready">Ready</span></td>
@@ -1480,7 +2698,9 @@
                         </tr>
                         <tr>
                             <td><span class="type-badge type-connector">Connector</span></td>
-                            <td><div class="component-name">AI Calling Bot Service Gateway</div></td>
+                            <td>
+                                <div class="component-name">AI Calling Bot Service Gateway</div>
+                            </td>
                             <td>Pre-Sales & Site Visit Followups</td>
                             <td>Layer 3 (<code>calling_service.py</code>)</td>
                             <td><span class="status-badge status-ready">Ready</span></td>
@@ -1488,7 +2708,9 @@
                         </tr>
                         <tr>
                             <td><span class="type-badge type-connector">Connector</span></td>
-                            <td><div class="component-name">WhatsApp Ingestion Webhook</div></td>
+                            <td>
+                                <div class="component-name">WhatsApp Ingestion Webhook</div>
+                            </td>
                             <td>Pre-Sales & Inquiries</td>
                             <td>Layer 3 (<code>adapters/whatsapp.py</code>)</td>
                             <td><span class="status-badge status-ready">Ready</span></td>
@@ -1496,7 +2718,9 @@
                         </tr>
                         <tr>
                             <td><span class="type-badge type-connector">Connector</span></td>
-                            <td><div class="component-name">Internal CRM Sync Router</div></td>
+                            <td>
+                                <div class="component-name">Internal CRM Sync Router</div>
+                            </td>
                             <td>Lead Stage Updates</td>
                             <td>Layer 3 (<code>domain/crm</code>)</td>
                             <td><span class="status-badge status-ready">Ready</span></td>
@@ -1504,7 +2728,9 @@
                         </tr>
                         <tr>
                             <td><span class="type-badge type-connector">Connector</span></td>
-                            <td><div class="component-name">Salesforce External CRM Adapter</div></td>
+                            <td>
+                                <div class="component-name">Salesforce External CRM Adapter</div>
+                            </td>
                             <td>Third-Party CRM Sync</td>
                             <td>Layer 3 (<code>adapters/salesforce.py</code>)</td>
                             <td><span class="status-badge status-notready">Not Ready</span></td>
@@ -1512,7 +2738,9 @@
                         </tr>
                         <tr>
                             <td><span class="type-badge type-connector">Connector</span></td>
-                            <td><div class="component-name">Tally / ERP Connector</div></td>
+                            <td>
+                                <div class="component-name">Tally / ERP Connector</div>
+                            </td>
                             <td>Accounts & Financial Billing</td>
                             <td>Layer 3 (<code>adapters/erp.py</code>)</td>
                             <td><span class="status-badge status-notready">Not Ready</span></td>
@@ -1522,7 +2750,9 @@
                         <!-- Core Agents -->
                         <tr>
                             <td><span class="type-badge type-core">Core Agent</span></td>
-                            <td><div class="component-name">Intent Classifier Agent</div></td>
+                            <td>
+                                <div class="component-name">Intent Classifier Agent</div>
+                            </td>
                             <td>Inbound Inquiry Routing</td>
                             <td>Layer 2 (Multi-Agent Swarm)</td>
                             <td><span class="status-badge status-ready">Ready</span></td>
@@ -1530,7 +2760,9 @@
                         </tr>
                         <tr>
                             <td><span class="type-badge type-core">Core Agent</span></td>
-                            <td><div class="component-name">RAG Context Retrieval Agent</div></td>
+                            <td>
+                                <div class="component-name">RAG Context Retrieval Agent</div>
+                            </td>
                             <td>Pre-Sales & Knowledge Q&A</td>
                             <td>Layer 2 (Vector Knowledge)</td>
                             <td><span class="status-badge status-ready">Ready</span></td>
@@ -1538,7 +2770,9 @@
                         </tr>
                         <tr>
                             <td><span class="type-badge type-core">Core Agent</span></td>
-                            <td><div class="component-name">Communication Channel Router</div></td>
+                            <td>
+                                <div class="component-name">Communication Channel Router</div>
+                            </td>
                             <td>Outreach Channel Decision</td>
                             <td>Layer 2 + Layer 3</td>
                             <td><span class="status-badge status-ready">Ready</span></td>
@@ -1546,7 +2780,9 @@
                         </tr>
                         <tr>
                             <td><span class="type-badge type-core">Core Agent</span></td>
-                            <td><div class="component-name">Content & Script Generation Agent</div></td>
+                            <td>
+                                <div class="component-name">Content & Script Generation Agent</div>
+                            </td>
                             <td>Telephony Guidelines & Copy</td>
                             <td>Layer 2 (<code>generate-script</code>)</td>
                             <td><span class="status-badge status-ready">Ready</span></td>
@@ -1556,7 +2792,9 @@
                         <!-- Specialized & Supporting Tools -->
                         <tr>
                             <td><span class="type-badge type-specialized">Specialized Tool</span></td>
-                            <td><div class="component-name">Property Search Agent</div></td>
+                            <td>
+                                <div class="component-name">Property Search Agent</div>
+                            </td>
                             <td>Unit Availability & Inventory Lookup</td>
                             <td>Layer 3 (<code>domain/property</code>)</td>
                             <td><span class="status-badge status-ready">Ready</span></td>
@@ -1564,7 +2802,9 @@
                         </tr>
                         <tr>
                             <td><span class="type-badge type-specialized">Specialized Tool</span></td>
-                            <td><div class="component-name">Lead Prioritization Engine</div></td>
+                            <td>
+                                <div class="component-name">Lead Prioritization Engine</div>
+                            </td>
                             <td>Scoring & Matrix Evaluation</td>
                             <td>Layer 3 (<code>lead_repo.py</code>)</td>
                             <td><span class="status-badge status-ready">Ready</span></td>
@@ -1572,7 +2812,9 @@
                         </tr>
                         <tr>
                             <td><span class="type-badge type-supporting">Supporting Tool</span></td>
-                            <td><div class="component-name">Tour & Site Visit Dispatcher</div></td>
+                            <td>
+                                <div class="component-name">Tour & Site Visit Dispatcher</div>
+                            </td>
                             <td>Site Visit & Executive Roster</td>
                             <td>Layer 3 (<code>domain/tour</code>)</td>
                             <td><span class="status-badge status-inprogress">In Progress</span></td>
@@ -1580,7 +2822,9 @@
                         </tr>
                         <tr>
                             <td><span class="type-badge type-supporting">Supporting Tool</span></td>
-                            <td><div class="component-name">Procurement Tracking Repository</div></td>
+                            <td>
+                                <div class="component-name">Procurement Tracking Repository</div>
+                            </td>
                             <td>Vendor Order Status</td>
                             <td>Layer 3 (<code>domain/procurement</code>)</td>
                             <td><span class="status-badge status-inprogress">In Progress</span></td>
@@ -1588,7 +2832,9 @@
                         </tr>
                         <tr>
                             <td><span class="type-badge type-supporting">Supporting Tool</span></td>
-                            <td><div class="component-name">Background Scheduler (Celery / Cron)</div></td>
+                            <td>
+                                <div class="component-name">Background Scheduler (Celery / Cron)</div>
+                            </td>
                             <td>Retry Loops & Follow-up Triggers</td>
                             <td>Layer 3 (<code>worker/tasks</code>)</td>
                             <td><span class="status-badge status-ready">Ready</span></td>
@@ -1601,4 +2847,5 @@
 
     </div>
 </body>
+
 </html>
