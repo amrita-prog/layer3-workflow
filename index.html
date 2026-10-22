@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vida End-to-End Workflow Architecture & Readiness Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0f1d;
+            --bg-secondary: #111827;
+            --bg-card: #162032;
+            --bg-card-hover: #1c2940;
+            --border-color: #24344d;
+            --border-highlight: #3b82f6;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-blue: #3b82f6;
+            --accent-indigo: #6366f1;
+            --accent-cyan: #06b6d4;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --badge-ready-bg: rgba(16, 185, 129, 0.15);
+            --badge-ready-border: #10b981;
+            --badge-notready-bg: rgba(244, 63, 94, 0.15);
+            --badge-notready-border: #f43f5e;
+            --badge-inprogress-bg: rgba(245, 158, 11, 0.15);
+            --badge-inprogress-border: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 32px 24px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1380px;
+            margin: 0 auto;
+        }
+
+        /* Top Header */
+        .header {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px 34px;
+            margin-bottom: 26px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #6366f1, #06b6d4, #10b981);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 14px;
+        }
+
+        .project-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(59, 130, 246, 0.12);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #60a5fa;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            border-radius: 9999px;
+        }
+
+        .btn-print {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #ffffff;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+            transition: all 0.2s ease;
+        }
+
+        .btn-print:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(37, 99, 235, 0.5);
+        }
+
+        h1 {
+            font-size: 27px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 6px;
+            letter-spacing: -0.02em;
+        }
+
+        .header-desc {
+            font-size: 14.5px;
+            color: var(--text-secondary);
+            max-width: 950px;
+            line-height: 1.55;
+        }
+
+        .meta-strip {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 13px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+        }
+
+        .meta-item strong {
+            color: #f1f5f9;
+        }
+
+        /* Section Containers */
+        .section {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 26px 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 19px;
+            font-weight: 700;
+            color: #f8fafc;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-tag {
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-secondary);
+        }
+
+        /* 5 Standard Blocks Grid */
+        .blocks-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 14px;
+        }
+
+        .block-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .block-card:hover {
+            border-color: var(--accent-blue);
+            background: var(--bg-card-hover);
+        }
+
+        .block-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 6px;
+        }
+
+        .block-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .block-desc {
+            font-size: 11.5px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .block-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: auto;
+        }
+
+        .pill {
+            font-size: 10.5px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+            padding: 2px 7px;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+
+        /* Flow Diagram Container */
+        .flow-container {
+            background: #0d1424;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 22px;
+            margin-top: 14px;
+        }
+
+        .flow-step-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .flow-step-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .flow-step-box {
+            flex: 1;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 14px 16px;
+        }
+
+        .flow-step-box.primary { border-left: 4px solid var(--accent-blue); }
+        .flow-step-box.intel { border-left: 4px solid var(--accent-indigo); }
+        .flow-step-box.calling { border-left: 4px solid var(--accent-cyan); }
+        .flow-step-box.state {
+            border-left: 4px solid var(--accent-amber);
+            background: rgba(245, 158, 11, 0.04);
+        }
+
+        .flow-step-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .flow-step-badge {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .badge-l3 { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+        .badge-l2 { background: rgba(99, 102, 241, 0.2); color: #a5b4fc; }
+        .badge-ops { background: rgba(6, 182, 212, 0.2); color: #67e8f9; }
+
+        .flow-step-body {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            color: var(--text-muted);
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Decision Split UI */
+        .decision-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 14px;
+            padding: 14px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .decision-branch {
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        .branch-yes {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+        }
+
+        .branch-no {
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.25);
+        }
+
+        .branch-title {
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .branch-yes .branch-title { color: #34d399; }
+        .branch-no .branch-title { color: #fbbf24; }
+
+        /* Visual Diagram Viewport */
+        .diagram-viewport {
+            width: 100%;
+            background: #090e1a;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 16px;
+            overflow-x: auto;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+        }
+        .diagram-image {
+            width: 100%;
+            max-width: 1300px;
+            height: auto;
+            border-radius: 8px;
+            display: inline-block;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: high-quality;
+        }
+
+        /* Detailed Stage Flow Pipelines */
+        .stage-flow-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 22px 24px;
+            margin-bottom: 22px;
+            transition: all 0.2s ease;
+        }
+        .stage-flow-card:hover {
+            border-color: rgba(59, 130, 246, 0.45);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+        }
+        .stage-flow-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 14px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .stage-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .stage-badge-num {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #ffffff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 6px;
+            text-transform: uppercase;
+        }
+        .stage-main-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        .stage-flow-pipeline {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin: 18px 0;
+        }
+        .mini-step-box {
+            background: rgba(13, 20, 36, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 16px 13px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            position: relative;
+            min-height: 250px;
+            transition: all 0.2s ease;
+        }
+        .mini-step-box:hover {
+            border-color: rgba(59, 130, 246, 0.6);
+            background: rgba(17, 24, 39, 0.95);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+        }
+        .mini-step-top {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .mini-step-circle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            font-size: 11px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 1px solid rgba(59, 130, 246, 0.35);
+        }
+        .mini-step-title {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.35;
+        }
+        .mini-step-desc {
+            font-size: 11.5px;
+            color: #94a3b8;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            flex-grow: 1;
+        }
+        .mini-step-example {
+            background: rgba(6, 182, 212, 0.06);
+            border: 1px dashed rgba(6, 182, 212, 0.28);
+            border-radius: 6px;
+            padding: 8px 10px;
+            font-size: 11px;
+            line-height: 1.45;
+            color: #cbd5e1;
+            margin-top: auto;
+        }
+        .mini-step-example strong {
+            color: var(--accent-cyan);
+            display: block;
+            font-size: 9.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 3px;
+        }
+        .stage-flow-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            font-size: 12px;
+        }
+        .milestone-badge {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #34d399;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 11px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Stages Grid */
+        .stages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 18px;
+        }
+
+        .stage-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .stage-card:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            background: var(--bg-card-hover);
+        }
+
+        .stage-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .stage-index {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+        }
+
+        .stage-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .stage-flow-list {
+            list-style: none;
+            margin: 12px 0;
+            padding-left: 0;
+        }
+
+        .stage-flow-list li {
+            position: relative;
+            padding-left: 18px;
+            margin-bottom: 6px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .stage-flow-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent-blue);
+            font-weight: bold;
+        }
+
+        .stage-footer {
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+        }
+
+        /* Readiness Table */
+        .table-wrap {
+            overflow-x: auto;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12.5px;
+            text-align: left;
+        }
+
+        thead {
+            background-color: #0e1726;
+        }
+
+        th {
+            padding: 12px 16px;
+            font-weight: 700;
+            color: #cbd5e1;
+            border-bottom: 1px solid var(--border-color);
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(36, 52, 77, 0.6);
+            color: var(--text-secondary);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .component-name {
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+
+        .type-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .type-connector { background: rgba(6, 182, 212, 0.15); color: #22d3ee; }
+        .type-core { background: rgba(99, 102, 241, 0.15); color: #a5b4fc; }
+        .type-specialized { background: rgba(168, 85, 247, 0.15); color: #d8b4fe; }
+        .type-supporting { background: rgba(59, 130, 246, 0.15); color: #93c5fd; }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 8px;
+            border-radius: 9999px;
+            font-size: 10.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-ready {
+            background: var(--badge-ready-bg);
+            border: 1px solid var(--badge-ready-border);
+            color: #34d399;
+        }
+
+        .status-notready {
+            background: var(--badge-notready-bg);
+            border: 1px solid var(--badge-notready-border);
+            color: #fb7185;
+        }
+
+        .status-inprogress {
+            background: var(--badge-inprogress-bg);
+            border: 1px solid var(--badge-inprogress-border);
+            color: #fbbf24;
+        }
+
+        /* Print Media Styling for PDF */
+        @media print {
+            body {
+                background: #ffffff !important;
+                color: #0f172a !important;
+                padding: 10px !important;
+                font-size: 10.5pt !important;
+            }
+
+            .container {
+                max-width: 100% !important;
+            }
+
+            .btn-print, .header::before {
+                display: none !important;
+            }
+
+            .header, .section, .block-card, .stage-card, .flow-step-box, .flow-container {
+                background: #ffffff !important;
+                color: #0f172a !important;
+                border: 1px solid #cbd5e1 !important;
+                box-shadow: none !important;
+                break-inside: avoid;
+            }
+
+            h1, .block-name, .stage-name, .flow-step-title, .section-title, .component-name {
+                color: #0f172a !important;
+            }
+
+            .block-desc, .flow-step-body, .stage-flow-list li, td, .header-desc {
+                color: #334155 !important;
+            }
+
+            .status-ready {
+                background: #dcfce7 !important;
+                border: 1px solid #16a34a !important;
+                color: #15803d !important;
+            }
+
+            .status-notready {
+                background: #ffe4e6 !important;
+                border: 1px solid #e11d48 !important;
+                color: #be123c !important;
+            }
+
+            .status-inprogress {
+                background: #fef3c7 !important;
+                border: 1px solid #d97706 !important;
+                color: #b45309 !important;
+            }
+
+            .table-wrap {
+                border: 1px solid #cbd5e1 !important;
+            }
+
+            thead {
+                background-color: #f1f5f9 !important;
+            }
+
+            th {
+                color: #1e293b !important;
+                border-bottom: 2px solid #cbd5e1 !important;
+            }
+
+            td {
+                border-bottom: 1px solid #e2e8f0 !important;
+            }
+
+            .decision-container, .stage-flow-card {
+                background: #f8fafc !important;
+                border: 1px solid #e2e8f0 !important;
+            }
+
+            .mini-step-box {
+                background: #ffffff !important;
+                border: 1px solid #cbd5e1 !important;
+                min-height: auto !important;
+                page-break-inside: avoid;
+            }
+
+            .mini-step-example {
+                background: #f1f5f9 !important;
+                border: 1px dashed #94a3b8 !important;
+                color: #334155 !important;
+            }
+
+            .mini-step-example strong {
+                color: #0284c7 !important;
+            }
+
+            .mini-step-desc {
+                color: #334155 !important;
+            }
+
+            .mini-step-title {
+                color: #0f172a !important;
+            }
+
+            .diagram-viewport {
+                background: #ffffff !important;
+                border: none !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+            }
+            .diagram-image {
+                width: 100% !important;
+                max-width: 100% !important;
+                box-shadow: none !important;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-top">
+                <div class="project-badge">
+                    <span>🏢 Project Vida</span>
+                    <span>•</span>
+                    <span>Workflow Architecture</span>
+                </div>
+                <button class="btn-print" onclick="window.print()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+                        <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/>
+                    </svg>
+                    Print / Save as PDF
+                </button>
+            </div>
+            <h1>Vida End-to-End Workflow Architecture & Readiness Report</h1>
+            <p class="header-desc">
+                Technical workflow blueprint covering Ingestion, Layer 3 Backend Orchestration, Layer 2 Agent Intelligence, AI Calling Bot Service Execution, Lifecycle Stage Progression, and Component Readiness Tracking.
+            </p>
+            <div class="meta-strip">
+                <div class="meta-item">
+                    <span>Target Domain:</span>
+                    <strong>Vida Real Estate</strong>
+                </div>
+                <div class="meta-item">
+                    <span>Architecture Tier:</span>
+                    <strong>Layer 1 (Data), Layer 2 (Agents), Layer 3 (Backend & Orchestration)</strong>
+                </div>
+                <div class="meta-item">
+                    <span>Core Readiness:</span>
+                    <strong style="color: #34d399;">~75% Ready</strong>
+                </div>
+            </div>
+        </header>
+
+        <!-- SECTION 1: 5 STANDARD ARCHITECTURAL BLOCKS -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>🧱 The 5 Standard Architectural Blocks</span>
+                </h2>
+                <span class="section-tag">Core Foundation</span>
+            </div>
+
+            <div class="blocks-grid">
+                <!-- Block 1 -->
+                <div class="block-card">
+                    <div>
+                        <div class="block-num">Block 01</div>
+                        <div class="block-name">Lead Ingestion & Channels (Connectors)</div>
+                        <p class="block-desc">
+                            Omnichannel intake gateways ingesting inquiries, Excel uploads, webhooks, and raw customer touchpoints into Layer 3.
+                        </p>
+                    </div>
+                    <div class="block-pills">
+                        <span class="pill">Excel / CSV</span>
+                        <span class="pill">Lead Webhook</span>
+                        <span class="pill">WhatsApp API</span>
+                    </div>
+                </div>
+
+                <!-- Block 2 -->
+                <div class="block-card">
+                    <div>
+                        <div class="block-num">Block 02 (Stage 0)</div>
+                        <div class="block-name">Customer Profile Matching (Entity Resolution)</div>
+                        <p class="block-desc">
+                            Resolves phone/email identity, cross-references historical interactions, de-duplicates leads, and links to customer personas.
+                        </p>
+                    </div>
+                    <div class="block-pills">
+                        <span class="pill">De-duplication</span>
+                        <span class="pill">Consumer Profile</span>
+                        <span class="pill">Project Interest</span>
+                    </div>
+                </div>
+
+                <!-- Block 3 -->
+                <div class="block-card">
+                    <div>
+                        <div class="block-num">Block 03</div>
+                        <div class="block-name">Lead Priority & Routing (Stage Assessor)</div>
+                        <p class="block-desc">
+                            Evaluates lead priority, checks lifecycle stage, and routes to appropriate specialized agents and operational queues.
+                        </p>
+                    </div>
+                    <div class="block-pills">
+                        <span class="pill">Lead Prioritization</span>
+                        <span class="pill">Stage Router</span>
+                        <span class="pill">Scoring Engine</span>
+                    </div>
+                </div>
+
+                <!-- Block 4 -->
+                <div class="block-card">
+                    <div>
+                        <div class="block-num">Block 04</div>
+                        <div class="block-name">Conversational Intelligence (Core AI Agents)</div>
+                        <p class="block-desc">
+                            Layer 2 agent pool orchestrating conversational intelligence, channel selection, and dialogue script guidelines.
+                        </p>
+                    </div>
+                    <div class="block-pills">
+                        <span class="pill">Intent Classifier</span>
+                        <span class="pill">RAG Context Engine</span>
+                        <span class="pill">Comm Router</span>
+                        <span class="pill">Content Generator</span>
+                    </div>
+                </div>
+
+                <!-- Block 5 -->
+                <div class="block-card">
+                    <div>
+                        <div class="block-num">Block 05</div>
+                        <div class="block-name">Execution & Systems (Specialized Tools)</div>
+                        <p class="block-desc">
+                            Task-specific execution units performing backend lookups, telephony dispatching, and enterprise synchronization.
+                        </p>
+                    </div>
+                    <div class="block-pills">
+                        <span class="pill">Property Search Tool</span>
+                        <span class="pill">Calling Dispatcher</span>
+                        <span class="pill">CRM Updater</span>
+                        <span class="pill">Tally Connector</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: END-TO-END AI CALL FLOW DIAGRAM -->
+        <section class="section" style="padding: 26px 22px;">
+            <div class="section-header" style="margin-bottom: 16px;">
+                <h2 class="section-title">
+                    <span>📞 Current AI Call Flow (End-to-End)</span>
+                </h2>
+                <span class="section-tag">Visual Workflow Architecture</span>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 13.5px; margin-bottom: 16px; line-height: 1.6;">
+                Complete end-to-end operational pipeline from CRM lead intake, Layer 3 backend storage, Layer 2 strategic intelligence & script pointer preparation, AI Calling Bot Service voice execution, and post-call feedback synchronization.
+            </p>
+
+            <!-- Diagram Toolbar with Full HD View Link -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                <span style="font-size: 12px; color: var(--accent-cyan); font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
+                    <span style="width: 8px; height: 8px; border-radius: 50%; background: #22d3ee; display: inline-block;"></span>
+                    High-Definition Architecture Infographic (2048 x 1024)
+                </span>
+                <a href="ai_call_flow_diagram.png" target="_blank" style="background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.35); color: #60a5fa; font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                    🔍 Open Full-Resolution Image in New Tab
+                </a>
+            </div>
+
+            <!-- Large Visual Infographic Display -->
+            <div class="diagram-viewport">
+                <img src="ai_call_flow_diagram.png" alt="Current AI Call Flow (End-to-End) - From CRM Data to Call Execution and Post-Call Data Storage" class="diagram-image">
+            </div>
+        </section>
+
+        <!-- SECTION 3: END-TO-END VIDA LIFECYCLE STAGES -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>🔄 Vida Real Estate Lifecycle Stages (Detailed Business Process Flows)</span>
+                </h2>
+                <span class="section-tag">Step-by-Step Operations</span>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 13.5px; margin-bottom: 22px; line-height: 1.6;">
+                Sequential operational workflows across all 6 customer lifecycle stages. Each stage maps customer interactions, internal decisions, and business milestone transitions.
+            </p>
+
+            <!-- Stage 1 Detailed Flow -->
+            <div class="stage-flow-card">
+                <div class="stage-flow-header">
+                    <div class="stage-title-wrap">
+                        <span class="stage-badge-num">Stage 01</span>
+                        <span class="stage-main-title">Pre-Sales & Lead Qualification Flow</span>
+                    </div>
+                    <span class="status-badge status-ready">Ready</span>
+                </div>
+                <div class="stage-flow-pipeline">
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">1</span>
+                            <span class="mini-step-title">Inquiry Intake</span>
+                        </div>
+                        <p class="mini-step-desc">Fresh customer inquiries land into our central system from digital channels (Meta Ads, 99acres portal, or website forms).</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            Inquiry received: "Amit Sharma, +91-98765-43210, looking for a 3 BHK in Sector 62 under ₹1.5 Cr".
+                        </div>
+                    </div>
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">2</span>
+                            <span class="mini-step-title">Identity & Profile Match</span>
+                        </div>
+                        <p class="mini-step-desc">System checks phone & email against our database to de-duplicate contacts and merge past interaction history.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            Match found: Amit visited Tower A in 2024. Prior notes merged so he isn't treated as a stranger.
+                        </div>
+                    </div>
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">3</span>
+                            <span class="mini-step-title">Priority & Intent Scoring</span>
+                        </div>
+                        <p class="mini-step-desc">Scoring engine calculates budget alignment against available inventory, loan readiness, and purchase timeline.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            Score: 92/100 (High Priority) — Budget matches Tower B 3 BHK units; home loan is pre-approved.
+                        </div>
+                    </div>
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">4</span>
+                            <span class="mini-step-title">AI Voice Call Outreach</span>
+                        </div>
+                        <p class="mini-step-desc">We dispatch the qualified lead to the AI Calling Bot Service to dial the buyer using personalized talking points.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            AI Bot calls Amit: introduces Tower B corner flats, confirms his budget, and invites him for a site visit.
+                        </div>
+                    </div>
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">5</span>
+                            <span class="mini-step-title">State Change & Promotion</span>
+                        </div>
+                        <p class="mini-step-desc">If buyer expresses interest, call logs "State Change = Yes", updates CRM status to Qualified, and unlocks Stage 02.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            Amit confirms: "Yes, I will visit this Saturday at 11 AM." Lead auto-promoted to Stage 02 (Site Visit).
+                        </div>
+                    </div>
+                </div>
+                <div class="stage-flow-footer">
+                    <div>
+                        <span style="color: var(--text-muted);">Active Connectors:</span>
+                        <span style="color: #f1f5f9; font-weight: 600; margin-left: 6px;">Portal/Meta Ingestion, Database Entity Matcher, AI Calling Bot Gateway, WhatsApp Cloud</span>
+                    </div>
+                    <div class="milestone-badge">
+                        <span>✓ Milestone: Qualified Lead with Confirmed Site Visit Intent</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stage 2 Detailed Flow -->
+            <div class="stage-flow-card">
+                <div class="stage-flow-header">
+                    <div class="stage-title-wrap">
+                        <span class="stage-badge-num">Stage 02</span>
+                        <span class="stage-main-title">Site Visit & Property Tour Flow</span>
+                    </div>
+                    <span class="status-badge status-inprogress">In Progress</span>
+                </div>
+                <div class="stage-flow-pipeline">
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">1</span>
+                            <span class="mini-step-title">Preferred Slot Booking</span>
+                        </div>
+                        <p class="mini-step-desc">System reserves buyer's preferred date & time slot in the experience centre calendar to prevent double-booking.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            Slot reserved: Saturday, 25th Oct at 11:00 AM at Vida Experience Center for Amit Sharma & family.
+                        </div>
+                    </div>
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">2</span>
+                            <span class="mini-step-title">Instant WhatsApp Invite</span>
+                        </div>
+                        <p class="mini-step-desc">WhatsApp Connector delivers confirmation with Google Maps location pin, digital QR gate pass, and project brochure.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            WhatsApp delivered: "Welcome Amit! Here is your Visit Pass #VH-842, GPS Map link, and Tower B E-Brochure."
+                        </div>
+                    </div>
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">3</span>
+                            <span class="mini-step-title">RM Assignment</span>
+                        </div>
+                        <p class="mini-step-desc">System assigns a dedicated on-ground Relationship Manager (RM) and forwards the buyer's full profile dossier.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            Assigned: RM Vikram Singh receives briefing note: "Amit prefers higher floors (12+), park view, ₹1.5 Cr budget."
+                        </div>
+                    </div>
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">4</span>
+                            <span class="mini-step-title">Physical Sample Flat Tour</span>
+                        </div>
+                        <p class="mini-step-desc">Customer visits site; RM guides them through actual sample apartment, tower lobbies, construction quality, and amenities.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            Tour completed: Amit walks through Unit 1402 (Tower B), inspects master bedroom views and modern layout.
+                        </div>
+                    </div>
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">5</span>
+                            <span class="mini-step-title">Visit Feedback & Shortlist</span>
+                        </div>
+                        <p class="mini-step-desc">RM logs buyer feedback, shortlisted floor plans, and pricing discussions into database, transitioning toward booking.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            Feedback logged: "Customer shortlisted Flat B-1402, requested customized payment plan" → Transition to Stage 03.
+                        </div>
+                    </div>
+                </div>
+                <div class="stage-flow-footer">
+                    <div>
+                        <span style="color: var(--text-muted);">Active Connectors:</span>
+                        <span style="color: #f1f5f9; font-weight: 600; margin-left: 6px;">WhatsApp API, Tour Database (domain/tour), Executive Roster Engine</span>
+                    </div>
+                    <div class="milestone-badge">
+                        <span>✓ Milestone: Completed Site Visit & Unit Shortlisted</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stage 3 Detailed Flow -->
+            <div class="stage-flow-card">
+                <div class="stage-flow-header">
+                    <div class="stage-title-wrap">
+                        <span class="stage-badge-num">Stage 03</span>
+                        <span class="stage-main-title">Booking & Token Advance Flow</span>
+                    </div>
+                    <span class="status-badge status-inprogress">In Progress</span>
+                </div>
+                <div class="stage-flow-pipeline">
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">1</span>
+                            <span class="mini-step-title">Unit Selection & Lock</span>
+                        </div>
+                        <p class="mini-step-desc">Buyer chooses specific flat; backend instantly places a real-time lock on that unit in inventory to prevent duplicate booking.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            Unit B-1402 (Tower B, 14th Floor, 1,850 sq.ft) marked "Temporarily Reserved - Holding for 48 Hours".
+                        </div>
+                    </div>
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">2</span>
+                            <span class="mini-step-title">Official Cost Sheet</span>
+                        </div>
+                        <p class="mini-step-desc">Pricing engine calculates base rate, floor rise, parking allotment, clubhouse fee, and generates a milestone cost sheet.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            Cost Sheet: Total agreement value ₹1.48 Cr + GST, including 2 covered car parks and installment schedule.
+                        </div>
+                    </div>
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">3</span>
+                            <span class="mini-step-title">Token Advance Payment</span>
+                        </div>
+                        <p class="mini-step-desc">System generates secure payment link or logs bank NEFT/RTGS transaction to collect the initial booking advance.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            Payment captured: ₹2,00,000 token advance paid online via NetBanking; instant bank reference generated.
+                        </div>
+                    </div>
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">4</span>
+                            <span class="mini-step-title">Digital Receipt & Allotment</span>
+                        </div>
+                        <p class="mini-step-desc">Document engine generates official digital booking receipt and provisional allotment letter, dispatched via email & WhatsApp.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            Booking docket #VIDA-BK-912 dispatched with digital signature, receipt, and builder allotment stamp.
+                        </div>
+                    </div>
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">5</span>
+                            <span class="mini-step-title">Digital KYC Verification</span>
+                        </div>
+                        <p class="mini-step-desc">Buyer securely uploads PAN card, Aadhaar, and photos via portal; system verifies credentials and seals booking status.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            KYC verified: PAN & Aadhaar authenticated. Unit B-1402 officially marked "Sold / In-Progress" → Sent to Accounts.
+                        </div>
+                    </div>
+                </div>
+                <div class="stage-flow-footer">
+                    <div>
+                        <span style="color: var(--text-muted);">Active Connectors:</span>
+                        <span style="color: #f1f5f9; font-weight: 600; margin-left: 6px;">Unit Inventory Database, Payment Gateway, CRM Deal Pipeline, KYC Portal</span>
+                    </div>
+                    <div class="milestone-badge">
+                        <span>✓ Milestone: Unit Officially Booked & Token Advance Received</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stage 4 Detailed Flow -->
+            <div class="stage-flow-card">
+                <div class="stage-flow-header">
+                    <div class="stage-title-wrap">
+                        <span class="stage-badge-num">Stage 04</span>
+                        <span class="stage-main-title">Procurement & Material Delivery Flow</span>
+                    </div>
+                    <span class="status-badge status-inprogress">In Progress</span>
+                </div>
+                <div class="stage-flow-pipeline">
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">1</span>
+                            <span class="mini-step-title">Construction Milestone Demand</span>
+                        </div>
+                        <p class="mini-step-desc">Civil engineering team logs structural stage completion (e.g. 14th slab cast), triggering material requisitions for unit finishing.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            Milestone trigger: Tower B 14th slab cast; requisition raised for Unit B-1402 internal wiring & tiling.
+                        </div>
+                    </div>
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">2</span>
+                            <span class="mini-step-title">Vendor Purchase Orders (PO)</span>
+                        </div>
+                        <p class="mini-step-desc">Procurement module issues purchase orders to verified suppliers for vitrified tiles, sanitary fixtures, conduits, and doors.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            PO #PO-8819 dispatched: 450 sq.m Italian vitrified tiles from Kajaria and CP sanitary fittings from Kohler.
+                        </div>
+                    </div>
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">3</span>
+                            <span class="mini-step-title">Site Delivery & Inspection</span>
+                        </div>
+                        <p class="mini-step-desc">Materials arrive at project warehouse; site quality inspectors check specifications against standards and log batch clearance.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            Inspection logged: Tile consignment Batch #T-402 inspected for zero cracks and uniform shade; approved.
+                        </div>
+                    </div>
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">4</span>
+                            <span class="mini-step-title">Interior Fit-out Execution</span>
+                        </div>
+                        <p class="mini-step-desc">Contractors execute internal plumbing, electrical cabling, floor tiling, wall plastering, and ceiling works inside the flat.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            Unit B-1402 update: Flooring completed, bathroom fittings installed, first coat of primer applied.
+                        </div>
+                    </div>
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">5</span>
+                            <span class="mini-step-title">Pre-Handover Quality Sign-off</span>
+                        </div>
+                        <p class="mini-step-desc">Chief site engineer conducts 85-point inspection (pressure tests, electrical lines, door alignments) and issues unit clearance.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            Certificate issued: Unit B-1402 certified 100% physically complete and ready for customer walkthrough.
+                        </div>
+                    </div>
+                </div>
+                <div class="stage-flow-footer">
+                    <div>
+                        <span style="color: var(--text-muted);">Active Connectors:</span>
+                        <span style="color: #f1f5f9; font-weight: 600; margin-left: 6px;">Procurement Repository (domain/procurement), Site Quality Ledger, Inventory ERP</span>
+                    </div>
+                    <div class="milestone-badge">
+                        <span>✓ Milestone: Unit Construction & Fit-out 100% Certified</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stage 5 Detailed Flow -->
+            <div class="stage-flow-card">
+                <div class="stage-flow-header">
+                    <div class="stage-title-wrap">
+                        <span class="stage-badge-num">Stage 05</span>
+                        <span class="stage-main-title">Accounts & Financial Billing Flow</span>
+                    </div>
+                    <span class="status-badge status-notready">Connector Pending</span>
+                </div>
+                <div class="stage-flow-pipeline">
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">1</span>
+                            <span class="mini-step-title">Milestone Demand Notice</span>
+                        </div>
+                        <p class="mini-step-desc">As structural stages are certified by site engineers, billing engine automatically generates the next installment demand note.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            Demand raised: "Tower B 14th Slab Completed — 10% installment of ₹14.80 Lakhs payable by 15th Nov".
+                        </div>
+                    </div>
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">2</span>
+                            <span class="mini-step-title">Digital Invoice & Payment Link</span>
+                        </div>
+                        <p class="mini-step-desc">System dispatches GST-compliant tax invoice along with a direct 1-click NetBanking/UPI payment link via WhatsApp and email.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            WhatsApp sent to Amit: "Invoice #INV-1108 ready. Pay securely via Axis Bank Virtual Account Link."
+                        </div>
+                    </div>
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">3</span>
+                            <span class="mini-step-title">Bank Credit & Instant Receipt</span>
+                        </div>
+                        <p class="mini-step-desc">Once funds reach the escrow account, the payment connector auto-reconciles bank UTR numbers and dispatches stamped receipt.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            Payment cleared: ₹14,80,000 credited; receipt #RCPT-7729 automatically sent to customer within 60 seconds.
+                        </div>
+                    </div>
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">4</span>
+                            <span class="mini-step-title">Corporate Ledger Sync (Tally)</span>
+                        </div>
+                        <p class="mini-step-desc">Payment credits, GST splits, and builder ledger vouchers are formatted for push into financial software (Pending Client Tally API).</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            Status: Accounting vouchers formatted; awaiting client IT team to provide Tally API access credentials.
+                        </div>
+                    </div>
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">5</span>
+                            <span class="mini-step-title">Payment Nurture & Reminders</span>
+                        </div>
+                        <p class="mini-step-desc">For unpaid installments, automated polite reminder schedules via WhatsApp and SMS keep buyers updated without harsh manual calls.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            Automated note: Friendly reminder sent 3 days before due date with breakdown of remaining balance.
+                        </div>
+                    </div>
+                </div>
+                <div class="stage-flow-footer">
+                    <div>
+                        <span style="color: var(--text-muted);">Active Connectors:</span>
+                        <span style="color: #fb7185; font-weight: 600; margin-left: 6px;">Tally ERP Connector (Pending Client Credentials), Invoicing Engine, Payment Gateway Webhook</span>
+                    </div>
+                    <div class="milestone-badge">
+                        <span>✓ Milestone: Installment Collected & Ledger Reconciled</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stage 6 Detailed Flow -->
+            <div class="stage-flow-card">
+                <div class="stage-flow-header">
+                    <div class="stage-title-wrap">
+                        <span class="stage-badge-num">Stage 06</span>
+                        <span class="stage-main-title">Post-Sales & Possession Handover Flow</span>
+                    </div>
+                    <span class="status-badge status-inprogress">In Progress</span>
+                </div>
+                <div class="stage-flow-pipeline">
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">1</span>
+                            <span class="mini-step-title">Financial Clearance & NOC</span>
+                        </div>
+                        <p class="mini-step-desc">Finance department verifies 100% cost sheet settlement, meter connection charges, and society sinking fund, issuing a Final NOC.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            NOC Cleared: All installments, maintenance corpus, and legal documentation fees settled at ₹0 balance.
+                        </div>
+                    </div>
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">2</span>
+                            <span class="mini-step-title">Joint Snag Walkthrough</span>
+                        </div>
+                        <p class="mini-step-desc">Buyer and customer-care engineer inspect the finished flat room-by-room; any minor cosmetic touch-up is logged in mobile app.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            Walkthrough: Amit inspects Unit B-1402; notes minor silicone touch-up on shower glass and railing polish.
+                        </div>
+                    </div>
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">3</span>
+                            <span class="mini-step-title">Snag Rectification & Approval</span>
+                        </div>
+                        <p class="mini-step-desc">Dedicated on-site snag rectification team completes all logged items within 48-72 hours; buyer reviews and signs digital acceptance.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            Rectification done: All 2 punch-list items resolved; Amit inspects and signs digital clearance on tablet.
+                        </div>
+                    </div>
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">4</span>
+                            <span class="mini-step-title">Key Handover & Possession Kit</span>
+                        </div>
+                        <p class="mini-step-desc">Official handover ceremony: homeowner receives original unit brass keys, appliance warranty cards, blueprints, and Possession Letter.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            Handover: Possession Certificate #POSS-2025-412 signed; brass keys and welcome gift hamper presented.
+                        </div>
+                    </div>
+                    <div class="mini-step-box">
+                        <div class="mini-step-top">
+                            <span class="mini-step-circle">5</span>
+                            <span class="mini-step-title">Community Onboarding</span>
+                        </div>
+                        <p class="mini-step-desc">New homeowner is enrolled into the Vida Resident Mobile App for digital visitor entry gate-passes, clubhouse booking, and society dues.</p>
+                        <div class="mini-step-example">
+                            <strong>Example</strong>
+                            Onboarded: Amit's profile activated on Vida Community App with Flat B-1402 profile and EV parking slot #P2-18.
+                        </div>
+                    </div>
+                </div>
+                <div class="stage-flow-footer">
+                    <div>
+                        <span style="color: var(--text-muted);">Active Connectors:</span>
+                        <span style="color: #f1f5f9; font-weight: 600; margin-left: 6px;">Handover Certificate Generator, Resident Portal, WhatsApp Community Bot</span>
+                    </div>
+                    <div class="milestone-badge">
+                        <span>✓ Milestone: Keys Handed Over & Resident Welcomed</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: REAL READINESS MATRIX (AUDITED AGAINST CODEBASE) -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>📊 Connectors & Agents Readiness Matrix</span>
+                </h2>
+                <span class="section-tag">Codebase-Audited</span>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 16px;">
+                Verified technical audit of all connectors, core agents, specialized agents, and supporting tools in the Layer 3 repository.
+            </p>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Component Name</th>
+                            <th>Lifecycle Stage / Function</th>
+                            <th>Repository Location</th>
+                            <th>Status</th>
+                            <th>Technical Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Connectors -->
+                        <tr>
+                            <td><span class="type-badge type-connector">Connector</span></td>
+                            <td><div class="component-name">Excel / CSV Lead Ingestion Adapter</div></td>
+                            <td>Pre-Sales Bulk Ingestion</td>
+                            <td>Layer 3 (<code>adapters/excel.py</code>)</td>
+                            <td><span class="status-badge status-ready">Ready</span></td>
+                            <td>Fully implemented schema parser and asynchronous ingestion queue.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-badge type-connector">Connector</span></td>
+                            <td><div class="component-name">AI Calling Bot Service Gateway</div></td>
+                            <td>Pre-Sales & Site Visit Followups</td>
+                            <td>Layer 3 (<code>calling_service.py</code>)</td>
+                            <td><span class="status-badge status-ready">Ready</span></td>
+                            <td>Two dispatch APIs and webhook receiver ready for bot execution.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-badge type-connector">Connector</span></td>
+                            <td><div class="component-name">WhatsApp Ingestion Webhook</div></td>
+                            <td>Pre-Sales & Inquiries</td>
+                            <td>Layer 3 (<code>adapters/whatsapp.py</code>)</td>
+                            <td><span class="status-badge status-ready">Ready</span></td>
+                            <td>Meta Cloud API webhook parser integrated into Lead schema.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-badge type-connector">Connector</span></td>
+                            <td><div class="component-name">Internal CRM Sync Router</div></td>
+                            <td>Lead Stage Updates</td>
+                            <td>Layer 3 (<code>domain/crm</code>)</td>
+                            <td><span class="status-badge status-ready">Ready</span></td>
+                            <td>Internal CRM stage update and lead assignment repository active.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-badge type-connector">Connector</span></td>
+                            <td><div class="component-name">Salesforce External CRM Adapter</div></td>
+                            <td>Third-Party CRM Sync</td>
+                            <td>Layer 3 (<code>adapters/salesforce.py</code>)</td>
+                            <td><span class="status-badge status-notready">Not Ready</span></td>
+                            <td>Base adapter stub created; OAuth and REST sync pending.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-badge type-connector">Connector</span></td>
+                            <td><div class="component-name">Tally / ERP Connector</div></td>
+                            <td>Accounts & Financial Billing</td>
+                            <td>Layer 3 (<code>adapters/erp.py</code>)</td>
+                            <td><span class="status-badge status-notready">Not Ready</span></td>
+                            <td>Adapter stub created; external client Tally API endpoints pending.</td>
+                        </tr>
+
+                        <!-- Core Agents -->
+                        <tr>
+                            <td><span class="type-badge type-core">Core Agent</span></td>
+                            <td><div class="component-name">Intent Classifier Agent</div></td>
+                            <td>Inbound Inquiry Routing</td>
+                            <td>Layer 2 (Multi-Agent Swarm)</td>
+                            <td><span class="status-badge status-ready">Ready</span></td>
+                            <td>Classifies buyer intent (pricing, site visit, complaint, brochure).</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-badge type-core">Core Agent</span></td>
+                            <td><div class="component-name">RAG Context Retrieval Agent</div></td>
+                            <td>Pre-Sales & Knowledge Q&A</td>
+                            <td>Layer 2 (Vector Knowledge)</td>
+                            <td><span class="status-badge status-ready">Ready</span></td>
+                            <td>Retrieves Vida property brochures, unit layouts, and RERA specs.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-badge type-core">Core Agent</span></td>
+                            <td><div class="component-name">Communication Channel Router</div></td>
+                            <td>Outreach Channel Decision</td>
+                            <td>Layer 2 + Layer 3</td>
+                            <td><span class="status-badge status-ready">Ready</span></td>
+                            <td>Selects optimal channel (Telephony vs WhatsApp vs Email).</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-badge type-core">Core Agent</span></td>
+                            <td><div class="component-name">Content & Script Generation Agent</div></td>
+                            <td>Telephony Guidelines & Copy</td>
+                            <td>Layer 2 (<code>generate-script</code>)</td>
+                            <td><span class="status-badge status-ready">Ready</span></td>
+                            <td>Generates talking-point pointers for calling operations.</td>
+                        </tr>
+
+                        <!-- Specialized & Supporting Tools -->
+                        <tr>
+                            <td><span class="type-badge type-specialized">Specialized Tool</span></td>
+                            <td><div class="component-name">Property Search Agent</div></td>
+                            <td>Unit Availability & Inventory Lookup</td>
+                            <td>Layer 3 (<code>domain/property</code>)</td>
+                            <td><span class="status-badge status-ready">Ready</span></td>
+                            <td>Queries database for available units, towers, and pricing.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-badge type-specialized">Specialized Tool</span></td>
+                            <td><div class="component-name">Lead Prioritization Engine</div></td>
+                            <td>Scoring & Matrix Evaluation</td>
+                            <td>Layer 3 (<code>lead_repo.py</code>)</td>
+                            <td><span class="status-badge status-ready">Ready</span></td>
+                            <td>Internal algorithm scoring leads by income and buying intent.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-badge type-supporting">Supporting Tool</span></td>
+                            <td><div class="component-name">Tour & Site Visit Dispatcher</div></td>
+                            <td>Site Visit & Executive Roster</td>
+                            <td>Layer 3 (<code>domain/tour</code>)</td>
+                            <td><span class="status-badge status-inprogress">In Progress</span></td>
+                            <td>Tour database schema active; executive auto-roster in progress.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-badge type-supporting">Supporting Tool</span></td>
+                            <td><div class="component-name">Procurement Tracking Repository</div></td>
+                            <td>Vendor Order Status</td>
+                            <td>Layer 3 (<code>domain/procurement</code>)</td>
+                            <td><span class="status-badge status-inprogress">In Progress</span></td>
+                            <td>Core procurement schemas defined; vendor webhook sync in progress.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="type-badge type-supporting">Supporting Tool</span></td>
+                            <td><div class="component-name">Background Scheduler (Celery / Cron)</div></td>
+                            <td>Retry Loops & Follow-up Triggers</td>
+                            <td>Layer 3 (<code>worker/tasks</code>)</td>
+                            <td><span class="status-badge status-ready">Ready</span></td>
+                            <td>Automated retry daemon for 'State Change: NO' outcomes.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>
